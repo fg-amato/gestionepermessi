@@ -70,14 +70,14 @@ public class AttachmentDTO {
 		return new Attachment(this.id, this.nomeFile, this.contentType, this.payload);
 	}
 
-	public static AttachmentDTO buildAttachmentDTOFromModel(Attachment richiestaModel) {
-		return new AttachmentDTO(richiestaModel.getId(), richiestaModel.getNomeFile(), richiestaModel.getContentType(),
-				richiestaModel.getPayload());
+	public static AttachmentDTO buildAttachmentDTOFromModel(Attachment attachmentModel) {
+		return new AttachmentDTO(attachmentModel.getId(), attachmentModel.getNomeFile(), attachmentModel.getContentType(),
+				attachmentModel.getPayload());
 	}
 
 	public static List<AttachmentDTO> createAttachmentDTOListFromModelList(List<Attachment> modelListInput) {
-		return modelListInput.stream().map(richiestaEntity -> {
-			return AttachmentDTO.buildAttachmentDTOFromModel(richiestaEntity);
+		return modelListInput.stream().map(attachmentEntity -> {
+			return AttachmentDTO.buildAttachmentDTOFromModel(attachmentEntity);
 		}).collect(Collectors.toList());
 	}
 

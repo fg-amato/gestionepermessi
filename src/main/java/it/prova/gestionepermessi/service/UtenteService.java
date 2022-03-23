@@ -33,5 +33,7 @@ public interface UtenteService {
 	public void changePassword(Long idUtente, String nuovaPassword, String vecchiaPassword);
 
 	public void resetPassword(Long idUtente);
+	
+	public void inserisciUtenteEDipendente(Utente utenteInstance);
 
 }

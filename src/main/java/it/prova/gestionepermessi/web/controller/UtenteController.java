@@ -79,14 +79,11 @@ public class UtenteController {
 					ValidationNoPassword.class }) @ModelAttribute("insert_utente_attr") UtenteDTO utenteDTO,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 
-		if (!result.hasFieldErrors("password") && !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
-			result.rejectValue("confermaPassword", "password.diverse");
-
 		if (result.hasErrors()) {
 			model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
 			return "utente/insert";
 		}
-		utenteService.inserisciNuovo(utenteDTO.buildUtenteModel(true));
+		utenteService.inserisciUtenteEDipendente(utenteDTO.buildUtenteModel(true));
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/utente";
@@ -121,7 +118,7 @@ public class UtenteController {
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/utente";
 	}
-	
+
 	@PostMapping("/cambiaStato")
 	public String cambiaStato(@RequestParam(name = "idUtenteForChangingStato", required = true) Long idUtente) {
 		utenteService.changeUserAbilitation(idUtente);

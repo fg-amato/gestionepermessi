@@ -75,6 +75,13 @@ public class Dipendente {
 		this.sesso = sesso;
 	}
 
+	public Dipendente(String nome, String cognome, String email) {
+		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.email = email;
+	}
+
 	public Dipendente(String nome, String cognome, String codFis, String email, Date dataNascita, Date dataAssunzione,
 			Sesso sesso) {
 		super();
@@ -111,6 +118,14 @@ public class Dipendente {
 		this.dataNascita = dataNascita;
 		this.dataAssunzione = dataAssunzione;
 		this.sesso = sesso;
+		this.utente = utente;
+	}
+
+	public Dipendente(String nome, String cognome, String email, Utente utente) {
+		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.email = email;
 		this.utente = utente;
 	}
 
@@ -225,6 +240,21 @@ public class Dipendente {
 
 	public String toString() {
 		return this.nome + " " + this.cognome;
+	}
+
+	public static Dipendente buildDipendenteWithEmail(Dipendente d) {
+		d.setEmail(d.buildEmail());
+		d.setUtente(d.createUtente());
+		return d;
+	}
+
+	public String buildEmail() {
+		return this.nome.toLowerCase().charAt(0) + "." + this.cognome.toLowerCase() + "@prova.it";
+	}
+
+	public Utente createUtente() {
+		String defaultUsername = this.nome.toLowerCase().charAt(0) + "." + this.cognome.toLowerCase();
+		return new Utente(this.nome, this.cognome, defaultUsername, new Date());
 	}
 
 }

@@ -18,8 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.model.StatoUtente;
 import it.prova.gestionepermessi.model.Utente;
+import it.prova.gestionepermessi.repository.DipendenteRepository;
 import it.prova.gestionepermessi.repository.UtenteRepository;
 
 @Service
@@ -27,6 +29,9 @@ public class UtenteServiceImpl implements UtenteService {
 
 	@Autowired
 	private UtenteRepository repository;
+
+	@Autowired
+	private DipendenteRepository repositoryDipendente;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -169,6 +174,16 @@ public class UtenteServiceImpl implements UtenteService {
 			throw new RuntimeException("Elemento non trovato.");
 		utenteInstance.setPassword(passwordEncoder.encode(defaultPassword));
 		repository.save(utenteInstance);
+	}
+
+	@Transactional
+	public void inserisciUtenteEDipendente(Utente utenteInstance) {
+		Utente.populateUtenteWithUsernameEDipendente(utenteInstance);
+		utenteInstance.setPassword(passwordEncoder.encode(defaultPassword));
+		Dipendente dipendenteInstance = utenteInstance.getDipendente();
+
+		repository.save(utenteInstance);
+		repositoryDipendente.save(dipendenteInstance);
 	}
 
 }

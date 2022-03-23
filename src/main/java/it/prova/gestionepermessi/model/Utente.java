@@ -8,12 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -39,6 +41,10 @@ public class Utente {
 	@Enumerated(EnumType.STRING)
 	private StatoUtente stato;
 
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "utente")
+	@JoinColumn(name = "dipendente_id", referencedColumnName = "id", nullable = false, unique = true)
+	private Dipendente dipendente;
+
 	@ManyToMany
 	@JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
 	private Set<Ruolo> ruoli = new HashSet<>(0);
@@ -60,13 +66,17 @@ public class Utente {
 		this.dateCreated = dateCreated;
 	}
 
-	public Utente(String password, String nome, String cognome, Date dateCreated) {
-		super();
-		this.password = password;
+	public Utente(String username, String nome, String cognome, Date dateCreated) {
+		this.username = username;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.dateCreated = dateCreated;
-		this.username = this.buildUsername();
+	}
+
+	public static Utente populateUtenteWithUsernameEDipendente(Utente u) {
+		u.setUsername(u.buildUsername());
+		u.setDipendente(u.createDipendente());
+		return u;
 	}
 
 	private String buildUsername() {
@@ -81,7 +91,6 @@ public class Utente {
 		this.cognome = cognome;
 		this.dateCreated = dateCreated;
 		this.stato = stato;
-		this.username = this.buildUsername();
 	}
 
 	public Utente(Long id, String username, String password, String nome, String cognome, Date dateCreated,
@@ -181,6 +190,19 @@ public class Utente {
 
 	public boolean isDisabilitato() {
 		return this.stato != null && this.stato.equals(StatoUtente.DISABILITATO);
+	}
+
+	public Dipendente getDipendente() {
+		return dipendente;
+	}
+
+	public void setDipendente(Dipendente dipendente) {
+		this.dipendente = dipendente;
+	}
+
+	public Dipendente createDipendente() {
+		String defaultEmail = this.username + "@prova.it";
+		return new Dipendente(this.nome, this.cognome, defaultEmail, this);
 	}
 
 }

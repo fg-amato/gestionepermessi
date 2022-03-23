@@ -65,13 +65,6 @@
 									<form:errors  path="cognome" cssClass="error_field" />
 								</div>
 								 
-								<div class="col-md-3">
-									<label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-									<spring:bind path="password">
-										<input type="password" class="form-control ${status.error ? 'is-invalid' : ''}" name="password" id="password" placeholder="Inserire Password"  required>
-									</spring:bind>
-									<form:errors  path="password" cssClass="error_field" />
-								</div>
 								
 								<div class="col-md-3">
 									<label for="confermaPassword" class="form-label">Conferma Password <span class="text-danger">*</span></label>
