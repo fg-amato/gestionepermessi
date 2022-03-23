@@ -55,7 +55,7 @@
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/utente/show/${utenteItem.id }">Visualizza</a>
 											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/utente/edit/${utenteItem.id }">Edit</a>
 											<a id="changeStatoLink_#_${utenteItem.id }" class="btn btn-outline-${utenteItem.isAttivo()?'danger':'success'} btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >${utenteItem.isAttivo()?'Disabilita':'Abilita'}</a>
-											<a id="changePasswordLink_#_${utenteItem.id }" class="btn btn-outline-warning btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal1"  >Reset</a>
+											<%-- <a id="changePasswordLink_#_${utenteItem.id }" class="btn btn-outline-warning btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal1"  >Reset</a> --%>
 										</td>
 									</tr>
 								</c:forEach>
@@ -108,7 +108,7 @@
 	</script>
 	
 	
-	<!-- Modal -->
+<%-- 	<!-- Modal -->
 	<div class="modal fade" id="confirmOperationModal1" tabindex="-1"  aria-labelledby="confirmOperationModalLabel"
 	    aria-hidden="true">
 	    <div class="modal-dialog" >
@@ -139,7 +139,7 @@
 			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
 			$('#idUtenteForChangingPassword').val(callerId);
 		});
-	</script>
+	</script> --%>
 	
 	
 </body>

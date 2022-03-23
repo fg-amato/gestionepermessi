@@ -121,4 +121,10 @@ public class UtenteController {
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/utente";
 	}
+	
+	@PostMapping("/cambiaStato")
+	public String cambiaStato(@RequestParam(name = "idUtenteForChangingStato", required = true) Long idUtente) {
+		utenteService.changeUserAbilitation(idUtente);
+		return "redirect:/utente";
+	}
 }
