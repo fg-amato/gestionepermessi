@@ -1,4 +1,5 @@
 <!doctype html>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="it" class="h-100" >
 	 <head>
 	 
@@ -51,17 +52,44 @@
 				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
 				</div>
 			    
-			     <div class="p-5 mb-4 bg-light rounded-3">
+			    <%--  <div class="p-5 mb-4 bg-light rounded-3">
 				      <div class="container-fluid py-5">
 				        <h1 class="display-5 fw-bold">Benvenuto alla Raccolta Film</h1>
 				        <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. </p>
 				        <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/regista/search">Vai a Ricerca</a>
 				      </div>
-			    </div>
+			    </div> --%>
 			    
 			  </div>
-			  
-			  <!--  features di bootstrap 'Columns with icons'  -->
+			  <sec:authorize access="hasRole('ADMIN')">
+		      <!--  features di bootstrap 'Columns with icons'  -->
+			  <div class="container-fluid px-4  py-5" id="featured-3">
+			    <div class="row g-4 py-5 row-cols-1 row-cols-lg-2">
+			      <div class="feature col">
+			        <div class="feature-icon bg-primary bg-gradient">
+			          <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"/></svg>
+			        </div>
+			        <h2>Gestione Utenze</h2>
+			        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+			        
+			         <div class="col text-center">
+			        	 <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/utente/search">Vai alla funzionalità</a>
+			      	</div>
+			      </div>
+			      <div class="feature col">
+			        <div class="feature-icon bg-primary bg-gradient">
+			          <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"/></svg>
+			        </div>
+			        <h2>Ricerca Dipendenti</h2>
+			        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+			       <div class="col text-center">
+			       <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/dipendente/search">Vai alla funzionalità</a>
+			      	</div>
+			      </div>
+			    </div>
+			  </div>
+			</sec:authorize>
+			 <%--  <!--  features di bootstrap 'Columns with icons'  -->
 			  <div class="container px-4 py-5" id="featured-3">
 			    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
 			      <div class="feature col">
@@ -98,7 +126,7 @@
 			        </a>
 			      </div>
 			    </div>
-			  </div>
+			  </div> --%>
 			  
 			</main>
 			

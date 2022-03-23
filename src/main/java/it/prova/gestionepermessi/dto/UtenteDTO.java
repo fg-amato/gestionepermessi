@@ -144,7 +144,7 @@ public class UtenteDTO {
 	}
 
 	public Utente buildUtenteModel(boolean includeIdRoles) {
-		Utente result = new Utente(this.id, this.password, this.nome, this.cognome, this.dateCreated, this.stato);
+		Utente result = new Utente(this.id, this.username, this.password, this.nome, this.cognome, this.dateCreated, this.stato);
 		if (includeIdRoles && ruoliIds != null)
 			result.setRuoli(Arrays.asList(ruoliIds).stream().map(id -> new Ruolo(id)).collect(Collectors.toSet()));
 
