@@ -34,7 +34,7 @@ public class Utente {
 	private String cognome;
 	@Column(name = "dateCreated")
 	private Date dateCreated;
-	
+
 	// se non uso questa annotation viene gestito come un intero
 	@Enumerated(EnumType.STRING)
 	private StatoUtente stato;
@@ -42,7 +42,7 @@ public class Utente {
 	@ManyToMany
 	@JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
 	private Set<Ruolo> ruoli = new HashSet<>(0);
-	
+
 	public Utente() {
 	}
 
@@ -60,10 +60,23 @@ public class Utente {
 		this.dateCreated = dateCreated;
 	}
 
-	public Utente(Long id, String username, String password, String nome, String cognome, Date dateCreated,
+	public Utente(String password, String nome, String cognome, Date dateCreated) {
+		super();
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+		this.username = this.buildUsername();
+	}
+
+	private String buildUsername() {
+		return this.nome.toLowerCase().charAt(0) + "." + this.cognome.toLowerCase();
+	}
+
+	public Utente(Long id, String password, String nome, String cognome, Date dateCreated,
 			StatoUtente stato) {
 		this.id = id;
-		this.username = username;
+		this.username = this.buildUsername();
 		this.password = password;
 		this.nome = nome;
 		this.cognome = cognome;

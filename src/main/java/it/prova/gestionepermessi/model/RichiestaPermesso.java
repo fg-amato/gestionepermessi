@@ -35,16 +35,15 @@ public class RichiestaPermesso {
 	private boolean approvato;
 	@Column(name = "note")
 	private String note;
-	
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "attachment_id", referencedColumnName = "id", nullable = true)
 	private Attachment attachment;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dipendente_id", nullable = false)
 	private Dipendente dipendente;
 
-	
 	public RichiestaPermesso() {
 		super();
 	}
@@ -63,6 +62,18 @@ public class RichiestaPermesso {
 		this.tipoPermesso = tipoPermesso;
 		this.note = note;
 		this.dipendente = dipendente;
+	}
+
+	public RichiestaPermesso(Long id, String codiceCertificato, Date dataInizio, Date dataFine,
+			TipoPermesso tipoPermesso, String note) {
+		super();
+		this.id = id;
+		this.codiceCertificato = codiceCertificato;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.tipoPermesso = tipoPermesso;
+		this.note = note;
+
 	}
 
 	public RichiestaPermesso(Long id, String codiceCertificato, Date dataInizio, Date dataFine,
@@ -149,7 +160,5 @@ public class RichiestaPermesso {
 	public void setDipendente(Dipendente dipendente) {
 		this.dipendente = dipendente;
 	}
-	
-	
-	
+
 }

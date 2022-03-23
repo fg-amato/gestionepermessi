@@ -29,6 +29,13 @@ public class Attachment {
 		super();
 	}
 
+	public Attachment(String nomeFile, String contentType, byte[] payload) {
+		super();
+		this.nomeFile = nomeFile;
+		this.contentType = contentType;
+		this.payload = payload;
+	}
+
 	public Attachment(Long id, String nomeFile, String contentType, byte[] payload) {
 		super();
 		this.id = id;

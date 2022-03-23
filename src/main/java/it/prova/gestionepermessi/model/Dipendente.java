@@ -43,11 +43,24 @@ public class Dipendente {
 	private Sesso sesso;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "utente_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "utente_id", referencedColumnName = "id", nullable = false, unique = true)
 	private Utente utente;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dipendente")
 	private Set<RichiestaPermesso> richiestePermesso = new HashSet<>();
+
+	public Dipendente(Long id, String nome, String cognome, String codFis, String email, Date dataNascita,
+			Date dataAssunzione, Date dataDimissioni, Sesso sesso) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codFis = codFis;
+		this.email = email;
+		this.dataNascita = dataNascita;
+		this.dataAssunzione = dataAssunzione;
+		this.sesso = sesso;
+	}
 
 	public Dipendente(Long id, String nome, String cognome, String codFis, String email, Date dataNascita,
 			Date dataAssunzione, Sesso sesso) {
@@ -209,5 +222,9 @@ public class Dipendente {
 	public void setRichiestePermesso(Set<RichiestaPermesso> richiestePermesso) {
 		this.richiestePermesso = richiestePermesso;
 	}
-	
+
+	public String toString() {
+		return this.nome + " " + this.cognome;
+	}
+
 }

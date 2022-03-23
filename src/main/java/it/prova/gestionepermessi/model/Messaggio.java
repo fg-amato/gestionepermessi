@@ -32,16 +32,87 @@ public class Messaggio {
 	@JoinColumn(name = "richiesta_id", referencedColumnName = "id", nullable = false)
 	private RichiestaPermesso richiesta;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public RichiestaPermesso getRichiesta() {
+		return richiesta;
+	}
+
+	public void setRichiesta(RichiestaPermesso richiesta) {
+		this.richiesta = richiesta;
+	}
+
 	public Messaggio() {
 		super();
 	}
 
-	public Messaggio(String testo, String oggetto, boolean letto, RichiestaPermesso rp) {
+	public Messaggio(RichiestaPermesso rp) {
 		super();
+		this.testo = this.buildTestoMessaggio(rp);
+		this.oggetto = this.buildOggettoMessaggio(rp);
+		this.richiesta = rp;
+	}
+
+	public Messaggio(boolean letto, RichiestaPermesso rp) {
+		super();
+		this.testo = this.buildTestoMessaggio(rp);
+		this.oggetto = this.buildOggettoMessaggio(rp);
+		this.letto = letto;
+		this.richiesta = rp;
+	}
+
+	public Messaggio(Long id, String testo, String oggetto, boolean letto) {
+		super();
+		this.id = id;
 		this.testo = testo;
 		this.oggetto = oggetto;
 		this.letto = letto;
+	}
+
+	public Messaggio(RichiestaPermesso rp, Long id) {
+		super();
+		this.id = id;
+		this.testo = this.buildTestoMessaggio(rp);
+		this.oggetto = this.buildOggettoMessaggio(rp);
 		this.richiesta = rp;
+	}
+
+	public Messaggio(boolean letto, RichiestaPermesso rp, Long id) {
+		super();
+		this.id = id;
+		this.testo = this.buildTestoMessaggio(rp);
+		this.oggetto = this.buildOggettoMessaggio(rp);
+		this.letto = letto;
+		this.richiesta = rp;
+	}
+
+	private String buildOggettoMessaggio(RichiestaPermesso rp) {
+		String oggetto = "Richiesta permesso da parte di: " + rp.getDipendente().toString();
+		return oggetto;
+	}
+
+	private String buildTestoMessaggio(RichiestaPermesso rp) {
+		String testo = "Il dipendente " + rp.getDipendente().toString() + " ha richiesto un permesso per "
+				+ rp.getTipoPermesso() + " dalla data: " + rp.getDataInizio() + " alla data: " + rp.getDataFine();
+		if (rp.getNote().isBlank()) {
+			testo += " senza alcuna nota,";
+		} else {
+			testo += " allegando la seguente nota \"" + rp.getNote() + "\"";
+		}
+		if (rp.getTipoPermesso() == TipoPermesso.MALATTIA) {
+			testo += ", il seguente codice certificato: " + rp.getCodiceCertificato();
+		}
+		if (rp.getAttachment() != null) {
+			testo += " ed l'allegato avente nome: " + rp.getAttachment().getNomeFile();
+		}
+
+		return testo;
 	}
 
 	public String getTesto() {
