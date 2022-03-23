@@ -12,7 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -43,7 +42,6 @@ public class Dipendente {
 	private Sesso sesso;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "utente_id", referencedColumnName = "id", nullable = false, unique = true)
 	private Utente utente;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dipendente")
@@ -242,10 +240,9 @@ public class Dipendente {
 		return this.nome + " " + this.cognome;
 	}
 
-	public static Dipendente buildDipendenteWithEmail(Dipendente d) {
+	public static void buildDipendenteWithEmail(Dipendente d) {
 		d.setEmail(d.buildEmail());
 		d.setUtente(d.createUtente());
-		return d;
 	}
 
 	public String buildEmail() {

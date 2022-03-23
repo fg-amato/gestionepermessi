@@ -42,7 +42,6 @@ public class Utente {
 	private StatoUtente stato;
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "utente")
-	@JoinColumn(name = "dipendente_id", referencedColumnName = "id", nullable = false, unique = true)
 	private Dipendente dipendente;
 
 	@ManyToMany

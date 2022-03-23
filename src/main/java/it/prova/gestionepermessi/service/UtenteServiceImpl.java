@@ -179,11 +179,33 @@ public class UtenteServiceImpl implements UtenteService {
 	@Transactional
 	public void inserisciUtenteEDipendente(Utente utenteInstance) {
 		Utente.populateUtenteWithUsernameEDipendente(utenteInstance);
+		utenteInstance.setStato(StatoUtente.CREATO);
+		utenteInstance.setDateCreated(new Date());
 		utenteInstance.setPassword(passwordEncoder.encode(defaultPassword));
 		Dipendente dipendenteInstance = utenteInstance.getDipendente();
 
 		repository.save(utenteInstance);
 		repositoryDipendente.save(dipendenteInstance);
+	}
+
+	@Transactional
+	public void aggiornaUtenteEDipendente(Utente utenteInstance) {
+		// deve aggiornare solo nome, cognome, username, ruoli
+		Utente utenteReloaded = repository.findById(utenteInstance.getId()).orElse(null);
+		if (utenteReloaded == null)
+			throw new RuntimeException("Elemento non trovato");
+		utenteReloaded.setNome(utenteInstance.getNome());
+		utenteReloaded.setCognome(utenteInstance.getCognome());
+		utenteReloaded.setUsernameDefault();
+		utenteReloaded.setRuoli(utenteInstance.getRuoli());
+
+		Dipendente dipendenteAssociatoAdUtente = utenteReloaded.getDipendente();
+
+		dipendenteAssociatoAdUtente.setNome(utenteInstance.getNome());
+		dipendenteAssociatoAdUtente.setCognome(utenteInstance.getCognome());
+		dipendenteAssociatoAdUtente.setEmail(dipendenteAssociatoAdUtente.buildEmail());
+		// repositoryDipendente.save(dipendenteAssociatoAdUtente);
+		repository.save(utenteReloaded);
 	}
 
 }

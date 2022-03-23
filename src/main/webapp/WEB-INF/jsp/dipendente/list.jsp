@@ -46,19 +46,18 @@
 				            <table class='table table-striped ' >
 				                <thead>
 				                    <tr>
-				                        <th>Codice Fiscale</th>
-				                        <th>Data di Nascita</th>
-				                        <th>Data Assunzione</th>
-				                        <th>Data Dimissioni</th>
+				                        <th>Nome</th>
+				                        <th>Cognome</th>
+				                        <th>Email</th>
 				                        <th>Azioni</th>
 				                    </tr>
 				                </thead>
 				                <tbody>
 				                	<c:forEach items="${dipendente_list_attribute }" var="dipendenteItem">
-											<td>${dipendenteItem.codFis }</td>
-											<td><fmt:formatDate type = "date" value = "${dipendenteItem.dataDiNascita }" /></td>
-											<td><fmt:formatDate type = "date" value = "${dipendenteItem.dataAssunzione }" /></td>
-											<td><fmt:formatDate type = "date" value = "${dipendenteItem.dataDimissioni }" /></td>
+											<tr>
+											<td>${dipendenteItem.nome }</td>
+											<td>${dipendenteItem.cognome }</td>
+											<td>${dipendenteItem.email }</td>
 											<td>
 												<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/dipendente/show/${dipendenteItem.id }">Visualizza</a>
 												
@@ -67,6 +66,7 @@
 													<a class="btn btn-outline-danger btn-sm" href="${pageContext.request.contextPath}/dipendente/delete/${dipendenteItem.id }">Delete</a>
 												</sec:authorize>
 											</td>
+											</tr>
 									</c:forEach>
 				                </tbody>
 				            </table>

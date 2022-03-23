@@ -66,13 +66,7 @@
 								</div>
 								 
 								
-								<div class="col-md-3">
-									<label for="confermaPassword" class="form-label">Conferma Password <span class="text-danger">*</span></label>
-									<spring:bind path="confermaPassword">
-										<input type="password" class="form-control ${status.error ? 'is-invalid' : ''}" name="confermaPassword" id="confermaPassword" placeholder="Confermare Password"  required>
-									</spring:bind>
-									<form:errors  path="confermaPassword" cssClass="error_field" />
-								</div>
+							
 								
 								
 								<%--  checkbox ruoli 	--%>

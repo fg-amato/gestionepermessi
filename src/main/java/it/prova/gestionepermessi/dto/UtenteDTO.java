@@ -19,7 +19,7 @@ public class UtenteDTO {
 
 	private String username;
 
-	@NotBlank(message = "{password.notblank}", groups = { ValidationWithPassword.class })
+	@NotBlank(message = "{password.notblank}")
 	@Size(min = 8, max = 15, message = "Il valore inserito deve essere lungo tra {min} e {max} caratteri")
 	private String password;
 
