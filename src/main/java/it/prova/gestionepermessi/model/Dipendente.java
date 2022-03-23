@@ -251,7 +251,7 @@ public class Dipendente {
 
 	public Utente createUtente() {
 		String defaultUsername = this.nome.toLowerCase().charAt(0) + "." + this.cognome.toLowerCase();
-		return new Utente(this.nome, this.cognome, defaultUsername, new Date());
+		return new Utente(defaultUsername,this.nome, this.cognome,  new Date());
 	}
 
 }

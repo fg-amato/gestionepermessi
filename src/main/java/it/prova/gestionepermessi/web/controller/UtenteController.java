@@ -93,7 +93,6 @@ public class UtenteController {
 	@GetMapping("/show/{idUtente}")
 	public String show(@PathVariable(required = true) Long idUtente, Model model) {
 		Utente utenteModel = utenteService.caricaSingoloUtenteConRuoli(idUtente);
-		System.out.println(utenteModel.getRuoli().size());
 		model.addAttribute("show_utente_attr", UtenteToShowDTO.buildUtenteDTOFromModel(utenteModel));
 		return "utente/show";
 	}

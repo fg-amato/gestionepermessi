@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.gestionepermessi.dto.DipendenteDTO;
 import it.prova.gestionepermessi.dto.RuoloDTO;
+import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.service.DipendenteService;
 import it.prova.gestionepermessi.service.RuoloService;
 import it.prova.gestionepermessi.validation.ValidationNoPassword;
@@ -84,5 +86,12 @@ public class DipendenteController {
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/dipendente";
+	}
+
+	@GetMapping("/show/{idDipendente}")
+	public String show(@PathVariable(required = true) Long idDipendente, Model model) {
+		Dipendente dipendenteModel = dipendenteService.caricaSingoloElemento(idDipendente);
+		model.addAttribute("show_dipendente_attr", DipendenteDTO.buildDipendenteDTOFromModel(dipendenteModel));
+		return "dipendente/show";
 	}
 }
