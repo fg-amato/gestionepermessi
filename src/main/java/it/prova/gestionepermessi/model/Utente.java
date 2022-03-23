@@ -111,6 +111,10 @@ public class Utente {
 		this.username = username;
 	}
 
+	public void setUsernameDefault() {
+		this.setUsername(this.buildUsername());
+	}
+
 	public String getPassword() {
 		return password;
 	}

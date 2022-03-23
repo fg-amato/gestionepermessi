@@ -64,6 +64,7 @@ public class UtenteServiceImpl implements UtenteService {
 
 	@Transactional
 	public void inserisciNuovo(Utente utenteInstance) {
+		utenteInstance.setUsernameDefault();
 		utenteInstance.setStato(StatoUtente.CREATO);
 		utenteInstance.setPassword(passwordEncoder.encode(utenteInstance.getPassword()));
 		utenteInstance.setDateCreated(new Date());
