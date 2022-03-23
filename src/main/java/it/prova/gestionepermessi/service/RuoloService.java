@@ -17,4 +17,6 @@ public interface RuoloService {
 
 	public Ruolo cercaPerDescrizioneECodice(String descrizione, String codice);
 
+	public List<Ruolo> findAllExceptAdmin();
+
 }

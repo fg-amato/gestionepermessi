@@ -1,5 +1,6 @@
 package it.prova.gestionepermessi.dto;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import it.prova.gestionepermessi.model.Dipendente;
+import it.prova.gestionepermessi.model.Ruolo;
 import it.prova.gestionepermessi.model.Sesso;
 
 public class DipendenteDTO {
@@ -21,8 +23,8 @@ public class DipendenteDTO {
 	private String cognome;
 	@NotBlank(message = "{codiceFiscale.notblank}")
 	@Size(min = 16, max = 16, message = "Il valore inserito '${validatedValue}' deve essere lungo {min} caratteri")
-	private String codFis;
-	@NotBlank(message = "{codiceFiscale.notblank}")
+	private String codiceFiscale;
+	@NotBlank(message = "{email.notblank}")
 	private String email;
 	@NotNull(message = "{dataNascita.notnull}")
 	private Date dataNascita;
@@ -34,13 +36,23 @@ public class DipendenteDTO {
 	@NotNull(message = "{sesso.notblank}")
 	private Sesso sesso;
 
+	private Long[] ruoliIds;
+
+	public Long[] getRuoliIds() {
+		return ruoliIds;
+	}
+
+	public void setRuoliIds(Long[] ruoliIds) {
+		this.ruoliIds = ruoliIds;
+	}
+
 	public DipendenteDTO(Long id, String nome, String cognome, String codFis, String email, Date dataNascita,
 			Date dataAssunzione, Sesso sesso) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
-		this.codFis = codFis;
+		this.codiceFiscale = codFis;
 		this.email = email;
 		this.dataNascita = dataNascita;
 		this.dataAssunzione = dataAssunzione;
@@ -52,7 +64,7 @@ public class DipendenteDTO {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
-		this.codFis = codFis;
+		this.codiceFiscale = codFis;
 		this.email = email;
 		this.dataNascita = dataNascita;
 		this.dataAssunzione = dataAssunzione;
@@ -65,7 +77,7 @@ public class DipendenteDTO {
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
-		this.codFis = codFis;
+		this.codiceFiscale = codFis;
 		this.email = email;
 		this.dataNascita = dataNascita;
 		this.dataAssunzione = dataAssunzione;
@@ -101,12 +113,12 @@ public class DipendenteDTO {
 		this.cognome = cognome;
 	}
 
-	public String getCodFis() {
-		return codFis;
+	public String getCodiceFiscale() {
+		return codiceFiscale;
 	}
 
-	public void setCodFis(String codFis) {
-		this.codFis = codFis;
+	public void setCodiceFiscale(String codFis) {
+		this.codiceFiscale = codFis;
 	}
 
 	public String getEmail() {
@@ -149,8 +161,20 @@ public class DipendenteDTO {
 		this.sesso = sesso;
 	}
 
-	public Dipendente buildDipendenteModel() {
-		return new Dipendente(this.id, this.nome, this.cognome, this.codFis, this.email, this.dataNascita,
+	public Dipendente buildDipendenteModel(boolean includeIdRoles) {
+		Dipendente result = new Dipendente(this.id, this.nome, this.cognome, this.codiceFiscale, this.email,
+				this.dataNascita, this.dataAssunzione, this.dataDimissioni, this.sesso);
+		Dipendente.populateDipendenteWithEmailAndUtente(result);
+
+		if (includeIdRoles && ruoliIds != null)
+			result.getUtente()
+					.setRuoli(Arrays.asList(ruoliIds).stream().map(id -> new Ruolo(id)).collect(Collectors.toSet()));
+		return result;
+
+	}
+
+	public Dipendente buildDipendenteModelForSearch() {
+		return new Dipendente(this.id, this.nome, this.cognome, this.codiceFiscale, this.email, this.dataNascita,
 				this.dataAssunzione, this.dataDimissioni, this.sesso);
 	}
 
@@ -160,9 +184,10 @@ public class DipendenteDTO {
 				dipendenteModel.getDataAssunzione(), dipendenteModel.getDataDimissioni(), dipendenteModel.getSesso());
 	}
 
-	public static List<DipendenteDTO> createContribuenteDTOListFromModelList(List<Dipendente> modelListInput) {
+	public static List<DipendenteDTO> createDipendenteDTOListFromModelList(List<Dipendente> modelListInput) {
 		return modelListInput.stream().map(dipendenteEntity -> {
 			return DipendenteDTO.buildDipendenteDTOFromModel(dipendenteEntity);
 		}).collect(Collectors.toList());
 	}
+
 }

@@ -41,7 +41,7 @@ public class UtenteController {
 	@GetMapping
 	public ModelAndView listAllUtenti() {
 		ModelAndView mv = new ModelAndView();
-		List<Utente> utenti = utenteService.listAllUtenti();
+		List<UtenteDTO> utenti = UtenteDTO.createUtenteDTOListFromModelList(utenteService.listAllUtenti());
 		mv.addObject("utente_list_attribute", utenti);
 		mv.setViewName("utente/list");
 		return mv;
@@ -57,9 +57,10 @@ public class UtenteController {
 	public String listUtenti(UtenteDTO utenteExample, @RequestParam(defaultValue = "0") Integer pageNo,
 			@RequestParam(defaultValue = "9") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,
 			ModelMap model) {
-		List<Utente> utenti = utenteService
+		List<UtenteDTO> utenti = UtenteDTO.createUtenteDTOListFromModelList(utenteService
 				.findByExampleWithPagination(utenteExample.buildUtenteModel(true), pageNo, pageSize, sortBy)
-				.getContent();
+				.getContent());
+
 		model.addAttribute("utente_list_attribute", utenti);
 		return "utente/list";
 	}

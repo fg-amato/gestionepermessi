@@ -19,4 +19,6 @@ public interface DipendenteService {
 
 	public Page<Dipendente> findByExampleWithPagination(Dipendente example, Integer pageNo, Integer pageSize,
 			String sortBy);
+
+	public void inserisciDipendenteEdUtente(Dipendente dipendenteInstance);
 }

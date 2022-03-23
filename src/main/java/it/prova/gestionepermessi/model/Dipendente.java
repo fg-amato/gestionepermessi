@@ -240,7 +240,7 @@ public class Dipendente {
 		return this.nome + " " + this.cognome;
 	}
 
-	public static void buildDipendenteWithEmail(Dipendente d) {
+	public static void populateDipendenteWithEmailAndUtente(Dipendente d) {
 		d.setEmail(d.buildEmail());
 		d.setUtente(d.createUtente());
 	}
