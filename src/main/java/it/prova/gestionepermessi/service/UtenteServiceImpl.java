@@ -57,7 +57,7 @@ public class UtenteServiceImpl implements UtenteService {
 			throw new RuntimeException("Elemento non trovato");
 		utenteReloaded.setNome(utenteInstance.getNome());
 		utenteReloaded.setCognome(utenteInstance.getCognome());
-		utenteReloaded.setUsername(utenteInstance.getUsername());
+		utenteReloaded.setUsernameDefault();
 		utenteReloaded.setRuoli(utenteInstance.getRuoli());
 		repository.save(utenteReloaded);
 	}

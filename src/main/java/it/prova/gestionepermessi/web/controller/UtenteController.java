@@ -2,6 +2,8 @@ package it.prova.gestionepermessi.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -96,5 +98,27 @@ public class UtenteController {
 		System.out.println(utenteModel.getRuoli().size());
 		model.addAttribute("show_utente_attr", UtenteToShowDTO.buildUtenteDTOFromModel(utenteModel));
 		return "utente/show";
+	}
+
+	@GetMapping("/edit/{idUtente}")
+	public String edit(@PathVariable(required = true) Long idUtente, Model model) {
+		Utente utenteModel = utenteService.caricaSingoloUtenteConRuoli(idUtente);
+		model.addAttribute("edit_utente_attr", UtenteDTO.buildUtenteDTOFromModel(utenteModel));
+		model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
+		return "utente/edit";
+	}
+
+	@PostMapping("/update")
+	public String update(@Validated(ValidationNoPassword.class) @ModelAttribute("edit_utente_attr") UtenteDTO utenteDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
+			return "utente/edit";
+		}
+		utenteService.aggiorna(utenteDTO.buildUtenteModel(true));
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/utente";
 	}
 }
