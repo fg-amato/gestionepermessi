@@ -77,6 +77,19 @@ public class RichiestaPermesso {
 	}
 
 	public RichiestaPermesso(Long id, String codiceCertificato, Date dataInizio, Date dataFine,
+			TipoPermesso tipoPermesso, String note, Dipendente dipendente) {
+		super();
+		this.id = id;
+		this.codiceCertificato = codiceCertificato;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.tipoPermesso = tipoPermesso;
+		this.note = note;
+		this.dipendente = dipendente;
+
+	}
+
+	public RichiestaPermesso(Long id, String codiceCertificato, Date dataInizio, Date dataFine,
 			TipoPermesso tipoPermesso, String note, Attachment attachment, Dipendente dipendente) {
 		super();
 		this.id = id;

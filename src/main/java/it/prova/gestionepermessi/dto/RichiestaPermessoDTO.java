@@ -26,6 +26,25 @@ public class RichiestaPermessoDTO {
 
 	private String note;
 
+	@NotNull(message = "{dipendente.notnull}")
+	private DipendenteDTO dipendente;
+
+	public Boolean getApprovato() {
+		return approvato;
+	}
+
+	public void setApprovato(Boolean approvato) {
+		this.approvato = approvato;
+	}
+
+	public DipendenteDTO getDipendente() {
+		return dipendente;
+	}
+
+	public void setDipendente(DipendenteDTO dipendente) {
+		this.dipendente = dipendente;
+	}
+
 	public RichiestaPermessoDTO() {
 		super();
 	}
@@ -105,6 +124,11 @@ public class RichiestaPermessoDTO {
 	public RichiestaPermesso buildRichiestaModel() {
 		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
 				this.note);
+	}
+
+	public RichiestaPermesso buildRichiestaModelForSearch() {
+		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
+				this.note, this.dipendente.buildDipendenteModelForSearch());
 	}
 
 	public static RichiestaPermessoDTO buildRichiestaPermessoDTOFromModel(RichiestaPermesso richiestaModel) {

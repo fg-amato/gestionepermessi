@@ -1,5 +1,7 @@
 package it.prova.gestionepermessi.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -11,4 +13,7 @@ public interface DipendenteRepository
 
 	@Query("from Dipendente d join fetch d.utente where d.id = ?1")
 	public Dipendente findByIdWithUtente(Long id);
+
+	public List<Dipendente> findByCognomeIgnoreCaseContainingOrNomeIgnoreCaseContainingOrderByNomeAsc(String cognome,
+			String nome);
 }

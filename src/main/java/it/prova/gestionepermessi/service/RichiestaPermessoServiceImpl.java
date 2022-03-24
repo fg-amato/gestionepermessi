@@ -58,6 +58,8 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 			if (example.getTipoPermesso() != null)
 				predicates.add(cb.equal(root.get("tipoPermesso"), example.getTipoPermesso()));
 
+			if (example.getDipendente() != null && example.getDipendente().getId() != null)
+				predicates.add(cb.equal(cb.upper(root.get("dipendente")), example.getDipendente().getId()));
 			// manca il boolean
 			if (example.isApprovato() != null) {
 				predicates.add(cb.equal(root.get("approvato"), example.getTipoPermesso()));

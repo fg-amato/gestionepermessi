@@ -42,7 +42,7 @@ public class RichiestaPermessoController {
 			@RequestParam(defaultValue = "id") String sortBy, ModelMap model) {
 
 		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO.createRichiestaDTOListFromModelList(
-				richiestaPermessoService.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModel(),
+				richiestaPermessoService.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(),
 						pageNo, pageSize, sortBy).getContent());
 
 		model.addAttribute("richiesta_permesso_list_attribute", richieste);

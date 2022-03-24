@@ -80,6 +80,11 @@ public class Dipendente {
 		this.email = email;
 	}
 
+	public Dipendente(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Dipendente(String nome, String cognome, String codFis, String email, Date dataNascita, Date dataAssunzione,
 			Sesso sesso) {
 		super();
