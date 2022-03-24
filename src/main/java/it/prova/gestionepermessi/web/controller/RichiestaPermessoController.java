@@ -12,14 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import it.prova.gestionepermessi.dto.DipendenteDTO;
 import it.prova.gestionepermessi.dto.RichiestaPermessoDTO;
+import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.service.RichiestaPermessoService;
+import it.prova.gestionepermessi.service.UtenteService;
 
 @Controller
-@RequestMapping(value = { "", "/richieste_permesso" })
+@RequestMapping(value = "/richieste_permesso")
 public class RichiestaPermessoController {
 	@Autowired
 	private RichiestaPermessoService richiestaPermessoService;
+
+	@Autowired
+	private UtenteService utenteService;
 
 	@GetMapping
 	public ModelAndView listAllRichieste() {
@@ -41,17 +47,44 @@ public class RichiestaPermessoController {
 			@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "9") Integer pageSize,
 			@RequestParam(defaultValue = "id") String sortBy, ModelMap model) {
 
-		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO.createRichiestaDTOListFromModelList(
-				richiestaPermessoService.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(),
-						pageNo, pageSize, sortBy).getContent());
+		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
+				.createRichiestaDTOListFromModelList(richiestaPermessoService
+						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(), pageNo,
+								pageSize, sortBy)
+						.getContent());
 
 		model.addAttribute("richiesta_permesso_list_attribute", richieste);
 		return "richiesta_permesso/list";
 	}
-	
+
 	@PostMapping("/cambiaApprovazione")
-	public String cambiaApprovazione(@RequestParam(name = "idRichiestaForChangingApprovazione", required = true) Long idRichiesta) {
+	public String cambiaApprovazione(
+			@RequestParam(name = "idRichiestaForChangingApprovazione", required = true) Long idRichiesta) {
 		richiestaPermessoService.changeRequestApprovement(idRichiesta);
 		return "redirect:/richiesta_permesso";
 	}
+
+	@GetMapping("/search_personal")
+	public String searchRichiestaUserInSession(Model model) {
+		return "richiesta_permesso/search_personal";
+	}
+
+	@PostMapping("/listPersonal")
+	public String listRichieste(RichiestaPermessoDTO richiestaPermessoExample,
+			@RequestParam(name = "usernameUtente", required = true) String usernameUtente,
+			@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "9") Integer pageSize,
+			@RequestParam(defaultValue = "id") String sortBy, ModelMap model) {
+		Utente utenteInSession = utenteService.trovaByUsernameWithDipendente(usernameUtente);
+		richiestaPermessoExample
+				.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(utenteInSession.getDipendente()));
+		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
+				.createRichiestaDTOListFromModelList(richiestaPermessoService
+						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(), pageNo,
+								pageSize, sortBy)
+						.getContent());
+
+		model.addAttribute("richiesta_permesso_list_attribute", richieste);
+		return "richiesta_permesso/list";
+	}
+
 }

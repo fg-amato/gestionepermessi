@@ -38,4 +38,6 @@ public interface UtenteService {
 
 	public void aggiornaUtenteEDipendente(Utente utenteInstance);
 
+	public Utente trovaByUsernameWithDipendente(String usernameUtente);
+
 }

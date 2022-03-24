@@ -23,4 +23,7 @@ public interface UtenteRepository extends PagingAndSortingRepository<Utente, Lon
 	// caricamento eager, ovviamente si può fare anche con jpql
 	@EntityGraph(attributePaths = { "ruoli" })
 	Utente findByUsernameAndPasswordAndStato(String username, String password, StatoUtente stato);
+
+	@Query("from Utente u join fetch u.dipendente where u.username = ?1")
+	Utente findByUsernameWithDipendente(String username);
 }

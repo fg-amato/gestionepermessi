@@ -208,4 +208,10 @@ public class UtenteServiceImpl implements UtenteService {
 		repository.save(utenteReloaded);
 	}
 
+	@Override
+	@Transactional(readOnly = true) 
+	public Utente trovaByUsernameWithDipendente(String usernameUtente) {
+		return repository.findByUsernameWithDipendente(usernameUtente);  
+	}
+
 }
