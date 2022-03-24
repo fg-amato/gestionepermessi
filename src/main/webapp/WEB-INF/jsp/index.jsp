@@ -47,10 +47,12 @@
 			<main class="flex-shrink-0">
 			  <div class="container">
 			  
-			  	<div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }" role="alert">
-				  ${errorMessage}
-				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
-				</div>
+			  <div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none': ''}" role="alert">
+			  ${errorMessage}
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
 			    
 			    <%--  <div class="p-5 mb-4 bg-light rounded-3">
 				      <div class="container-fluid py-5">

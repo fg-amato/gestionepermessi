@@ -31,10 +31,19 @@
 			    <div class='card-body'>
 			    <sec:authorize access="hasRole('DIPENDENTE_USER')">
 			    	<a class="btn btn-primary " href="${pageContext.request.contextPath}/richieste_permesso/insert">Add New</a>
-			    </sec:authorize>	
+			    </sec:authorize>
+			    <sec:authorize access="hasRole('DIPENDENTE_USER')">
+			    	<a href="${pageContext.request.contextPath}/richieste_permesso/search_personal" class='btn btn-outline-secondary' >
+				            <i class='fa fa-chevron-left'></i> Torna alla Ricerca
+				        </a>
+			    </sec:authorize>
+			    
+			     <sec:authorize access="hasRole('BO_USER')">
 			    	<a href="${pageContext.request.contextPath}/richieste_permesso/search" class='btn btn-outline-secondary' >
 				            <i class='fa fa-chevron-left'></i> Torna alla Ricerca
 				        </a>
+			    </sec:authorize>	
+			    	
 			    
 			        <div class='table-responsive'>
 			            <table class='table table-striped ' >
@@ -48,12 +57,12 @@
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                	<c:forEach items="${richieste_permesso_list_attribute }" var="richiestaItem">
+			                	<c:forEach items="${richieste_list_attribute }" var="richiestaItem">
 									<tr>
 										<td>${richiestaItem.tipoPermesso }</td>
 										<td>${richiestaItem.dataInizio }</td>
 										<td>${richiestaItem.dataFine }</td>
-										<td>${richiestaItem.approvato? 'Approvata' : 'Non approvata' }</td>
+										<td>${"${richiestaItem.approvato==null}"? 'Approvata' : 'Non approvata' }</td>
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/richieste_permesso/show/${richiestaItem.id }">Visualizza</a>
 											<%-- <a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/richieste_permesso/edit/${richiestaItem.id }">Edit</a> --%>

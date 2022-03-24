@@ -33,6 +33,9 @@ public class RichiestaPermessoController {
 	@Autowired
 	private UtenteService utenteService;
 
+	// @Autowired
+	// private DipendenteService dipendenteService;
+
 	@GetMapping
 	public ModelAndView listAllRichieste() {
 		ModelAndView mv = new ModelAndView();
@@ -50,16 +53,19 @@ public class RichiestaPermessoController {
 
 	@PostMapping("/list")
 	public String listRichieste(RichiestaPermessoDTO richiestaPermessoExample,
+			@RequestParam(name = "approvato", required = false) String approvato,
 			@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "9") Integer pageSize,
 			@RequestParam(defaultValue = "id") String sortBy, ModelMap model) {
 
+		System.out.println(approvato.toString());
 		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
 				.createRichiestaDTOListFromModelList(richiestaPermessoService
 						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearchAndInsert(),
 								pageNo, pageSize, sortBy)
 						.getContent());
-
-		model.addAttribute("richiesta_permesso_list_attribute", richieste);
+//		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
+//				.createRichiestaDTOListFromModelList(richiestaPermessoService.listAllElements());
+		model.addAttribute("richieste_list_attribute", richieste);
 		return "richiesta_permesso/list";
 	}
 
@@ -76,7 +82,7 @@ public class RichiestaPermessoController {
 	}
 
 	@PostMapping("/listPersonal")
-	public String listRichieste(RichiestaPermessoDTO richiestaPermessoExample,
+	public String listRichiestePersonali(RichiestaPermessoDTO richiestaPermessoExample,
 			@RequestParam(name = "usernameUtente", required = true) String usernameUtente,
 			@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "9") Integer pageSize,
 			@RequestParam(defaultValue = "id") String sortBy, ModelMap model) {
@@ -88,8 +94,8 @@ public class RichiestaPermessoController {
 						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearchAndInsert(),
 								pageNo, pageSize, sortBy)
 						.getContent());
-
-		model.addAttribute("richiesta_permesso_list_attribute", richieste);
+		System.out.println(richieste.size());
+		model.addAttribute("richieste_list_attribute", richieste);
 		return "richiesta_permesso/list";
 	}
 

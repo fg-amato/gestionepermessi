@@ -64,7 +64,6 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	public Page<RichiestaPermesso> findByExampleWithPagination(RichiestaPermesso example, Integer pageNo,
 			Integer pageSize, String sortBy) {
 		Specification<RichiestaPermesso> specificationCriteria = (root, query, cb) -> {
-
 			List<Predicate> predicates = new ArrayList<Predicate>();
 
 			if (example.getTipoPermesso() != null)
@@ -72,9 +71,10 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 
 			if (example.getDipendente() != null && example.getDipendente().getId() != null)
 				predicates.add(cb.equal(cb.upper(root.get("dipendente")), example.getDipendente().getId()));
-			// manca il boolean
+
 			if (example.isApprovato() != null) {
-				predicates.add(cb.equal(root.get("approvato"), example.getTipoPermesso()));
+				System.out.println("APPROVE" + example.isApprovato());
+				predicates.add(cb.equal(root.get("approvato"), example.isApprovato()));
 			}
 
 			if (StringUtils.isNotEmpty(example.getCodiceCertificato()))
@@ -87,7 +87,6 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 			if (example.getDataFine() != null)
 				predicates.add(cb.greaterThanOrEqualTo(root.get("dataFine"), example.getDataFine()));
 
-			query.distinct(true);
 			return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 		};
 

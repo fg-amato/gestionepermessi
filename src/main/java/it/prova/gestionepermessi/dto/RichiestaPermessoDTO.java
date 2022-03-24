@@ -133,7 +133,6 @@ public class RichiestaPermessoDTO {
 	}
 
 	public static RichiestaPermessoDTO buildRichiestaPermessoDTOFromModel(RichiestaPermesso richiestaModel) {
-
 		return new RichiestaPermessoDTO(richiestaModel.getId(), richiestaModel.getCodiceCertificato(),
 				richiestaModel.getDataInizio(), richiestaModel.getDataFine(), richiestaModel.getTipoPermesso(),
 				richiestaModel.getNote());
