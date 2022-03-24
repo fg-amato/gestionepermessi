@@ -32,7 +32,7 @@ public class RichiestaPermesso {
 	@Enumerated(EnumType.STRING)
 	private TipoPermesso tipoPermesso;
 	@Column(name = "approvato")
-	private boolean approvato;
+	private Boolean approvato;
 	@Column(name = "note")
 	private String note;
 
@@ -129,11 +129,11 @@ public class RichiestaPermesso {
 		this.tipoPermesso = tipoPermesso;
 	}
 
-	public boolean isApprovato() {
+	public Boolean isApprovato() {
 		return approvato;
 	}
 
-	public void setApprovato(boolean approvato) {
+	public void setApprovato(Boolean approvato) {
 		this.approvato = approvato;
 	}
 

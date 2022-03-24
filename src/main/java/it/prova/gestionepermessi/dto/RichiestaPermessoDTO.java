@@ -22,7 +22,7 @@ public class RichiestaPermessoDTO {
 	@NotNull(message = "{tipoPermesso.notblank}")
 	private TipoPermesso tipoPermesso;
 
-	private boolean approvato;
+	private Boolean approvato;
 
 	private String note;
 
@@ -108,6 +108,7 @@ public class RichiestaPermessoDTO {
 	}
 
 	public static RichiestaPermessoDTO buildRichiestaPermessoDTOFromModel(RichiestaPermesso richiestaModel) {
+
 		return new RichiestaPermessoDTO(richiestaModel.getId(), richiestaModel.getCodiceCertificato(),
 				richiestaModel.getDataInizio(), richiestaModel.getDataFine(), richiestaModel.getTipoPermesso(),
 				richiestaModel.getNote());
@@ -118,5 +119,16 @@ public class RichiestaPermessoDTO {
 		return modelListInput.stream().map(richiestaEntity -> {
 			return RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiestaEntity);
 		}).collect(Collectors.toList());
+	}
+
+	public static List<RichiestaPermessoDTO> createRichiesteDTOListFromModelList(
+			List<RichiestaPermesso> modelListInput) {
+		return modelListInput.stream().map(richiesteEntity -> {
+			return RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiesteEntity);
+		}).collect(Collectors.toList());
+	}
+
+	public boolean isNotStarted() {
+		return (new Date()).before(dataInizio);
 	}
 }

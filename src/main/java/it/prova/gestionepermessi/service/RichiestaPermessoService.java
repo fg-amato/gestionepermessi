@@ -19,4 +19,6 @@ public interface RichiestaPermessoService {
 
 	public Page<RichiestaPermesso> findByExampleWithPagination(RichiestaPermesso example, Integer pageNo,
 			Integer pageSize, String sortBy);
+
+	public void changeRequestApprovement(Long idRichiesta);
 }

@@ -29,52 +29,76 @@
 			        <h5>Ricerca elementi</h5> 
 			    </div>
 			    <div class='card-body'>
-	
-						<form method="post" action="${pageContext.request.contextPath}/utente/list" class="row g-3">
-						
+		
+						<form method="post" action="${pageContext.request.contextPath}/richieste_permesso/list" class="row g-3">
+						<!-- tipoPermesso, dataInizio, dataFine, approvato, codiceCertificato -->
+							
+							
 							<div class="col-md-6">
-								<label for="nome" class="form-label">Nome</label>
-								<input type="text" name="nome" id="nome" class="form-control" placeholder="Inserire il nome" >
+								<label for="dataInizio" class="form-label">Data Inizio</label>
+                        		<input class="form-control" id="dataInizio" type="date" placeholder="dd/MM/yy"
+                            		title="formato : gg/mm/aaaa"  name="dataInizio" >
 							</div>
 							
 							<div class="col-md-6">
-								<label for="cognome" class="form-label">Cognome</label>
-								<input type="text" name="cognome" id="cognome" class="form-control" placeholder="Inserire il cognome" >
+								<label for="dataFine" class="form-label">Data Fine</label>
+                        		<input class="form-control" id="dataFine" type="date" placeholder="dd/MM/yy"
+                            		title="formato : gg/mm/aaaa"  name="dataFine" >
 							</div>
 							
 							<div class="col-md-6">
-								<label for="username" class="form-label">Username</label>
-								<input type="text" class="form-control" name="username" id="username" placeholder="Inserire username" >
-							</div>
-							<div class="col-md-6">
-								<label for="dateCreated" class="form-label">Data di Creazione</label>
-                        		<input class="form-control" id="dateCreated" type="date" placeholder="dd/MM/yy"
-                            		title="formato : gg/mm/aaaa"  name="dateCreated" >
-							</div>
-							
-							<div class="col-md-3">
-								<label for="stato" class="form-label">Stato</label>
-								    <select class="form-select " id="stato" name="stato" >
+								<label for="tipoPermesso" class="form-label">Tipo Permesso</label>
+								    <select class="form-select " id="tipoPermesso" name="tipoPermesso" >
 								    	<option value="" selected> - Selezionare - </option>
-								      	<option value="ATTIVO" >ATTIVO</option>
-								    	<option value="CREATO">CREATO</option>
-								      	<option value="DISABILITATO" >DISABILITATO</option>
+								      	<option value="FERIE" >FERIE</option>
+								    	<option value="MALATTIA">MALATTIA</option>
 							    	</select>
 							</div>
 							
-							<c:forEach items="${ruoli_totali_attr}" var="ruoloEntry">
-							<div class="form-check">
-								<input class="form-check-input" name="ruoliIds" type="checkbox" value="${ruoloEntry.id}" id="ruoliIds-${ruoloEntry.id}">
-								<label class="form-check-label" for="ruoliIds-${ruoloEntry.id}" >
-									${ruoloEntry.codice}
-								</label>
+							<div class="col-md-6 d-none" id ="prova">
+								<label for="codiceCertificato" class="form-label">Codice certificato</label>
+								<input type="text" name="codiceCertificato" id="codiceCertificato" class="form-control" placeholder="Inserire il codice certificato" >
 							</div>
-							</c:forEach>
+							
+							<script>
+								$('.form-select').change(function(){
+								
+									if($('#tipoPermesso :selected').text()=== 'MALATTIA'){
+										//console.log("MALATTIA");
+										$("#prova").removeClass('d-none');
+									}else{
+										//console.log("FERIE");
+										$("#prova").addClass('d-none');
+									}
+								});
+							</script>
+							
+							<div class="row-md-6">
+								<p> Stato richiesta </p>
+ 								<div class="form-check">
+  									<input class="form-check-input" type="radio" value = "true" name="approvato" id="flexRadioDefault1">
+  										<label class="form-check-label" for="flexRadioDefault1">
+    										Approvate
+  										</label>
+								</div>
+								<div class="form-check">
+  									<input class="form-check-input" type="radio" value = "false" name="approvato" id="flexRadioDefault2">
+  										<label class="form-check-label" for="flexRadioDefault2">
+    										Non approvate
+  										</label>
+								</div>
+								
+								<div class="form-check">
+  									<input class="form-check-input" type="radio" value ="null" name="approvato" id="flexRadioDefault2">
+  										<label class="form-check-label" for="flexRadioDefault3">
+    										Entrambe
+  										</label>
+								</div>
+							</div>
 							
 							<div class="col-12">	
 								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
 								<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
-								<a class="btn btn-outline-primary ml-2" href="${pageContext.request.contextPath}/utente/insert">Add New</a>
 							</div>
 	
 							
