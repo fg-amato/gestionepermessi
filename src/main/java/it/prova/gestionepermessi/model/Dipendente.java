@@ -241,8 +241,10 @@ public class Dipendente {
 	}
 
 	public static void populateDipendenteWithEmailAndUtente(Dipendente d) {
-		d.setEmail(d.buildEmail());
-		d.setUtente(d.createUtente());
+		if(!(d.nome.isBlank() && d.cognome.isBlank())) {
+			d.setEmail(d.buildEmail());
+			d.setUtente(d.createUtente());
+		}
 	}
 
 	public String buildEmail() {

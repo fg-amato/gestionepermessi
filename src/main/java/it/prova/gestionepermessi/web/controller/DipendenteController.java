@@ -2,12 +2,14 @@ package it.prova.gestionepermessi.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +24,6 @@ import it.prova.gestionepermessi.dto.RuoloDTO;
 import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.service.DipendenteService;
 import it.prova.gestionepermessi.service.RuoloService;
-import it.prova.gestionepermessi.validation.ValidationNoPassword;
-import it.prova.gestionepermessi.validation.ValidationWithPassword;
 
 @Controller
 @RequestMapping(value = "/dipendente")
@@ -71,9 +71,7 @@ public class DipendenteController {
 	}
 
 	@PostMapping("/save")
-	public String save(
-			@Validated({ ValidationWithPassword.class,
-					ValidationNoPassword.class }) @ModelAttribute("insert_dipendente_attr") DipendenteDTO dipendenteDTO,
+	public String save(@Valid @ModelAttribute("insert_dipendente_attr") DipendenteDTO dipendenteDTO,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 
 		if (result.hasErrors()) {
@@ -93,5 +91,24 @@ public class DipendenteController {
 		Dipendente dipendenteModel = dipendenteService.caricaSingoloElemento(idDipendente);
 		model.addAttribute("show_dipendente_attr", DipendenteDTO.buildDipendenteDTOFromModel(dipendenteModel));
 		return "dipendente/show";
+	}
+
+	@GetMapping("/edit/{idDipendente}")
+	public String edit(@PathVariable(required = true) Long idDipendente, Model model) {
+		Dipendente dipendenteModel = dipendenteService.caricaSingoloElemento(idDipendente);
+		model.addAttribute("edit_dipendente_attr", DipendenteDTO.buildDipendenteDTOFromModel(dipendenteModel));
+		return "dipendente/edit";
+	}
+
+	@PostMapping("/update")
+	public String update(@Valid @ModelAttribute("edit_dipendente_attr") DipendenteDTO dipendenteDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors()) {
+			return "dipendente/edit";
+		}
+		dipendenteService.aggiornaDipendenteEUtente(dipendenteDTO.buildDipendenteModelForSearch());
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/dipendente";
 	}
 }

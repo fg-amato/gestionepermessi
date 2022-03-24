@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "utente")
@@ -202,6 +203,12 @@ public class Utente {
 	public Dipendente createDipendente() {
 		String defaultEmail = this.username + "@prova.it";
 		return new Dipendente(this.nome, this.cognome, defaultEmail, this);
+	}
+
+	public static void updateUsernameUtenteAfterUpdatingDipendente(Utente u) {
+		u.setNome(u.getDipendente().getNome());
+		u.setCognome(u.getDipendente().getCognome());
+		u.setUsername(u.buildUsername());
 	}
 
 }

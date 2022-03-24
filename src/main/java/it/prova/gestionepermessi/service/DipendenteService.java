@@ -11,14 +11,16 @@ public interface DipendenteService {
 
 	public Dipendente caricaSingoloElemento(Long id);
 
-	public void aggiorna(Dipendente filmInstance);
+	public void aggiorna(Dipendente dipendenteInstance);
 
-	public void inserisciNuovo(Dipendente filmInstance);
+	public void inserisciNuovo(Dipendente dipendenteInstance);
 
-	public void rimuovi(Dipendente filmInstance);
+	public void rimuovi(Dipendente dipendenteInstance);
 
 	public Page<Dipendente> findByExampleWithPagination(Dipendente example, Integer pageNo, Integer pageSize,
 			String sortBy);
 
 	public void inserisciDipendenteEdUtente(Dipendente dipendenteInstance);
+
+	public void aggiornaDipendenteEUtente(Dipendente dipendenteInstance);
 }

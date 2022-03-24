@@ -114,6 +114,7 @@ public class DipendenteServiceImpl implements DipendenteService {
 	}
 
 	@Override
+	@Transactional
 	public void inserisciDipendenteEdUtente(Dipendente dipendenteInstance) {
 
 		Utente utenteInstance = dipendenteInstance.getUtente();
@@ -121,7 +122,35 @@ public class DipendenteServiceImpl implements DipendenteService {
 		utenteInstance.setPassword(passwordEncoder.encode(defaultPassword));
 		repositoryUtente.save(utenteInstance);
 		repository.save(dipendenteInstance);
+
+	}
+
+	@Transactional
+	public void aggiornaDipendenteEUtente(Dipendente dipendenteInstance) {
+		// deve aggiornare solo nome, cognome, username, ruoli
+		Dipendente dipendenteReloaded = repository.findByIdWithUtente(dipendenteInstance.getId());
+		if (dipendenteReloaded == null)
+			throw new RuntimeException("Elemento non trovato");
+
+		dipendenteReloaded.setNome(dipendenteInstance.getNome());
+		dipendenteReloaded.setCognome(dipendenteInstance.getCognome());
+		dipendenteReloaded.setCodFis(dipendenteInstance.getCodFis());
+		dipendenteReloaded.setDataNascita(dipendenteInstance.getDataNascita());
+		dipendenteReloaded.setDataAssunzione(dipendenteInstance.getDataAssunzione());
+		dipendenteReloaded.setDataDimissioni(dipendenteInstance.getDataDimissioni());
+		dipendenteReloaded.setSesso(dipendenteInstance.getSesso());
+		dipendenteReloaded.setEmail(dipendenteReloaded.buildEmail());
+
+		Utente utenteAssociatoADipendente = dipendenteReloaded.getUtente();
+
+		utenteAssociatoADipendente.setDipendente(dipendenteReloaded);
 		
+		//metodo che aggiorna i campi di nome, cognome ed username a partire dalle informazioni
+		//del dipendente contenuto nell'oggetto passato al metodo statico
+		Utente.updateUsernameUtenteAfterUpdatingDipendente(utenteAssociatoADipendente);
+		
+		// repositoryDipendente.save(dipendenteAssociatoAdUtente);
+		repositoryUtente.save(utenteAssociatoADipendente);
 	}
 
 }

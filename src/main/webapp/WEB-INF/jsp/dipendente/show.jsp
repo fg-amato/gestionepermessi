@@ -44,7 +44,7 @@
 					    	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">CodiceFiscale:</dt>
-							  <dd class="col-sm-9">${show_dipendente_attr.codiceFiscale==null? 'In attesa di aggiornamento admin' : '${show_dipendente_attr.codiceFiscale}' }</dd>
+							  <dd class="col-sm-9">${show_dipendente_attr.codiceFiscale==null? 'In attesa di aggiornamento ' : show_dipendente_attr.codiceFiscale } </dd>
 					    	</dl>
 					    	
 					    	<dl class="row">
@@ -55,23 +55,23 @@
 					    	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Data di Nascita:</dt>
-							  <dd class="col-sm-9">${show_dipendente_attr.dataNascita==null? 'In attesa di aggiornamento admin' :''}<fmt:formatDate type = "date" value = "${show_dipendente_attr.dataNascita}" /></dd>
+							  <dd class="col-sm-9">${show_dipendente_attr.dataNascita==null? 'In attesa di aggiornamento' :''}<fmt:formatDate type = "date" value = "${show_dipendente_attr.dataNascita}" /></dd>
 					    	</dl>
 					    	
 					    	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Sesso:</dt>
-							  <dd class="col-sm-9">${show_dipendente_attr.sesso== null?'In attesa di aggiornamento admin' :'show_dipendente_attr.sesso' }</dd>
+							  <dd class="col-sm-9">${show_dipendente_attr.sesso== null?'In attesa di aggiornamento' :show_dipendente_attr.sesso }</dd>
 					    	</dl>
 					    	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Data Assunzione:</dt>
-							  <dd class="col-sm-9">${show_dipendente_attr.dataAssunzione==null? 'In attesa di aggiornamento admin' :''}<fmt:formatDate type = "date" value = "${show_dipendente_attr.dataAssunzione}" /></dd>
+							  <dd class="col-sm-9">${show_dipendente_attr.dataAssunzione==null? 'In attesa di aggiornamento' :''}<fmt:formatDate type = "date" value = "${show_dipendente_attr.dataAssunzione}" /></dd>
 					    	</dl>
 					    	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Data Dimissioni:</dt>
-							  <dd class="col-sm-9">${show_dipendente_attr.dataDimissioni==null? 'In attesa di aggiornamento admin' :''}<fmt:formatDate type = "date" value = "${show_dipendente_attr.dataDimissioni}" /></dd>
+							  <dd class="col-sm-9">${show_dipendente_attr.dataDimissioni==null? 'In attesa di aggiornamento' :''}<fmt:formatDate type = "date" value = "${show_dipendente_attr.dataDimissioni}" /></dd>
 					    	</dl>
 						
 					    <!-- end card body -->

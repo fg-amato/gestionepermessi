@@ -35,10 +35,10 @@
 			<!-- ############## end ###################  -->
 	   
 	   
-	   <div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }" role="alert">
+	  <%--  <div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }" role="alert">
 					  ${errorMessage}
 					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
-					</div>
+					</div> --%>
 	   		<!-- Fixed navbar -->
 	   		<jsp:include page="./navbar.jsp"></jsp:include>
 	    
@@ -103,21 +103,21 @@
 			        <div class="feature-icon bg-primary bg-gradient">
 			          <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"/></svg>
 			        </div>
-			        <h2>Gestione Utenze</h2>
+			        <h2>Gestione Messaggi</h2>
 			        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
 			        
 			         <div class="col text-center">
-			        	 <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/utente/search">Vai alla funzionalità</a>
+			        	 <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/gestione_messaggi/search">Vai alla funzionalità</a>
 			      	</div>
 			      </div>
 			      <div class="feature col">
 			        <div class="feature-icon bg-primary bg-gradient">
 			          <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"/></svg>
 			        </div>
-			        <h2>Ricerca Dipendenti</h2>
+			        <h2>Ricerca Richieste Permesso</h2>
 			        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
 			       <div class="col text-center">
-			       <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/dipendente/search">Vai alla funzionalità</a>
+			       <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/richieste_permesso/search">Vai alla funzionalità</a>
 			      	</div>
 			      </div>
 			    </div>

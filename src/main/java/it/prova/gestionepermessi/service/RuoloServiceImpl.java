@@ -51,9 +51,7 @@ public class RuoloServiceImpl implements RuoloService {
 	@Transactional(readOnly = true)
 	public List<Ruolo> findAllExceptAdmin() {
 		List<Ruolo> result = new ArrayList<>();
-		Ruolo temp = ruoloRepository.findByDescrizioneAndCodice("Dipendente User", "ROLE_DIPENDENTE_USER");
-		System.out.println(temp.getCodice());
-		result.add(temp);
+		result.add(ruoloRepository.findByDescrizioneAndCodice("Dipendente User", "ROLE_DIPENDENTE_USER"));
 		result.add(ruoloRepository.findByDescrizioneAndCodice("BackOffice User", "ROLE_BO_USER"));
 
 		return result;

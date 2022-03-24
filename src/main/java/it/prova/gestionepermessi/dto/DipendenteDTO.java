@@ -17,14 +17,14 @@ public class DipendenteDTO {
 
 	private Long id;
 
-	@NotBlank(message = "{nomeDip.notblank}")
+	@NotBlank(message = "{nome.notblank}")
 	private String nome;
-	@NotBlank(message = "{cognomeDip.notblank}")
+	@NotBlank(message = "{cognome.notblank}")
 	private String cognome;
-	@NotBlank(message = "{codiceFiscale.notblank}")
+	//@NotBlank(message = "{codiceFiscale.notblank}")
 	@Size(min = 16, max = 16, message = "Il valore inserito '${validatedValue}' deve essere lungo {min} caratteri")
 	private String codiceFiscale;
-	@NotBlank(message = "{email.notblank}")
+	//@NotBlank(message = "{email.notblank}")
 	private String email;
 	@NotNull(message = "{dataNascita.notnull}")
 	private Date dataNascita;
@@ -166,7 +166,7 @@ public class DipendenteDTO {
 				this.dataNascita, this.dataAssunzione, this.dataDimissioni, this.sesso);
 		Dipendente.populateDipendenteWithEmailAndUtente(result);
 
-		if (includeIdRoles && ruoliIds != null)
+		if (includeIdRoles && ruoliIds != null && ruoliIds.length > 0)
 			result.getUtente()
 					.setRuoli(Arrays.asList(ruoliIds).stream().map(id -> new Ruolo(id)).collect(Collectors.toSet()));
 		return result;
