@@ -11,14 +11,16 @@ public interface RichiestaPermessoService {
 
 	public RichiestaPermesso caricaSingoloElemento(Long id);
 
-	public void aggiorna(RichiestaPermesso filmInstance);
+	public void aggiorna(RichiestaPermesso richiestaInstance);
 
-	public void inserisciNuovo(RichiestaPermesso filmInstance);
+	public void inserisciNuovo(RichiestaPermesso richiestaInstance);
 
-	public void rimuovi(RichiestaPermesso filmInstance);
+	public void rimuovi(RichiestaPermesso richiestaInstance);
 
 	public Page<RichiestaPermesso> findByExampleWithPagination(RichiestaPermesso example, Integer pageNo,
 			Integer pageSize, String sortBy);
 
 	public void changeRequestApprovement(Long idRichiesta);
+
+	public void addRichiestaEInserisciMessaggio(RichiestaPermesso richiestaInstance);
 }

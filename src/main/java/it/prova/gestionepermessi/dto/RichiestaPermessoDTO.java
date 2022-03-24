@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.model.TipoPermesso;
+import it.prova.gestionepermessi.validation.ValidationForInsertUpdateRichiestaPermesso;
 
 public class RichiestaPermessoDTO {
 
@@ -15,11 +16,11 @@ public class RichiestaPermessoDTO {
 
 	private String codiceCertificato;
 
-	@NotNull(message = "{dataInizio.notnull}")
+	@NotNull(message = "{dataInizio.notnull}", groups = (ValidationForInsertUpdateRichiestaPermesso.class))
 	private Date dataInizio;
-	@NotNull(message = "{dataFine.notnull}")
+	@NotNull(message = "{dataFine.notnull}", groups = (ValidationForInsertUpdateRichiestaPermesso.class))
 	private Date dataFine;
-	@NotNull(message = "{tipoPermesso.notblank}")
+	@NotNull(message = "{tipoPermesso.notblank}", groups = (ValidationForInsertUpdateRichiestaPermesso.class))
 	private TipoPermesso tipoPermesso;
 
 	private Boolean approvato;
@@ -126,7 +127,7 @@ public class RichiestaPermessoDTO {
 				this.note);
 	}
 
-	public RichiestaPermesso buildRichiestaModelForSearch() {
+	public RichiestaPermesso buildRichiestaModelForSearchAndInsert() {
 		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
 				this.note, this.dipendente.buildDipendenteModelForSearch());
 	}
@@ -155,4 +156,5 @@ public class RichiestaPermessoDTO {
 	public boolean isNotStarted() {
 		return (new Date()).before(dataInizio);
 	}
+
 }

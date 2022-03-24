@@ -13,8 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionepermessi.model.Messaggio;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
+import it.prova.gestionepermessi.repository.MessaggioRepository;
 import it.prova.gestionepermessi.repository.RichiestaPermessoRepository;
 
 @Service
@@ -23,32 +26,41 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	@Autowired
 	private RichiestaPermessoRepository repository;
 
+	@Autowired
+	private MessaggioRepository repositoryMessage;
+
 	@Override
+	@Transactional(readOnly = true)
 	public List<RichiestaPermesso> listAllElements() {
 		return (List<RichiestaPermesso>) repository.findAll();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RichiestaPermesso caricaSingoloElemento(Long id) {
 		return repository.findById(id).orElse(null);
 	}
 
 	@Override
+	@Transactional
 	public void aggiorna(RichiestaPermesso filmInstance) {
 		repository.save(filmInstance);
 	}
 
 	@Override
+	@Transactional
 	public void inserisciNuovo(RichiestaPermesso filmInstance) {
 		repository.save(filmInstance);
 	}
 
 	@Override
+	@Transactional
 	public void rimuovi(RichiestaPermesso filmInstance) {
 		repository.delete(filmInstance);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<RichiestaPermesso> findByExampleWithPagination(RichiestaPermesso example, Integer pageNo,
 			Integer pageSize, String sortBy) {
 		Specification<RichiestaPermesso> specificationCriteria = (root, query, cb) -> {
@@ -90,12 +102,23 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	}
 
 	@Override
+	@Transactional
 	public void changeRequestApprovement(Long idRichiesta) {
 		RichiestaPermesso richiestaInstance = caricaSingoloElemento(idRichiesta);
 		if (richiestaInstance == null)
 			throw new RuntimeException("Elemento non trovato.");
 
 		richiestaInstance.setApprovato(!richiestaInstance.isApprovato());
+	}
+
+	@Override
+	@Transactional
+	public void addRichiestaEInserisciMessaggio(RichiestaPermesso richiestaInstance) {
+		Messaggio messaggioInstance = RichiestaPermesso.createMessageFromRichiesta(richiestaInstance);
+		richiestaInstance.setApprovato(false);
+		repository.save(richiestaInstance);
+		repositoryMessage.save(messaggioInstance);
+
 	}
 
 }

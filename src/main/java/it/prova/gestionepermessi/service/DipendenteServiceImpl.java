@@ -89,16 +89,16 @@ public class DipendenteServiceImpl implements DipendenteService {
 				predicates.add(cb.like(cb.upper(root.get("email")), "%" + example.getEmail().toUpperCase() + "%"));
 
 			if (example.getDataAssunzione() != null)
-				predicates.add(cb.greaterThanOrEqualTo(root.get("dataassunzione"), example.getDataAssunzione()));
+				predicates.add(cb.greaterThanOrEqualTo(root.get("dataAssunzione"), example.getDataAssunzione()));
 
 			if (example.getDataDimissioni() != null)
-				predicates.add(cb.greaterThanOrEqualTo(root.get("datadimissioni"), example.getDataAssunzione()));
+				predicates.add(cb.greaterThanOrEqualTo(root.get("dataDimissioni"), example.getDataAssunzione()));
 
 			if (example.getSesso() != null)
 				predicates.add(cb.equal(root.get("sesso"), example.getSesso()));
 
 			if (example.getDataNascita() != null)
-				predicates.add(cb.greaterThanOrEqualTo(root.get("datanascita"), example.getDataNascita()));
+				predicates.add(cb.greaterThanOrEqualTo(root.get("dataNascita"), example.getDataNascita()));
 
 			return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 		};

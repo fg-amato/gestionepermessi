@@ -1,4 +1,5 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="it" class="h-100">
@@ -28,7 +29,9 @@
 			        <h5>Lista dei risultati</h5> 
 			    </div>
 			    <div class='card-body'>
+			    <sec:authorize access="hasRole('DIPENDENTE_USER')">
 			    	<a class="btn btn-primary " href="${pageContext.request.contextPath}/richieste_permesso/insert">Add New</a>
+			    </sec:authorize>	
 			    	<a href="${pageContext.request.contextPath}/richieste_permesso/search" class='btn btn-outline-secondary' >
 				            <i class='fa fa-chevron-left'></i> Torna alla Ricerca
 				        </a>

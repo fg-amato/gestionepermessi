@@ -174,4 +174,7 @@ public class RichiestaPermesso {
 		this.dipendente = dipendente;
 	}
 
+	public static Messaggio createMessageFromRichiesta(RichiestaPermesso rp) {
+		return Messaggio.fromRichiestaToMessage(rp);
+	}
 }
