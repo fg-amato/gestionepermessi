@@ -21,10 +21,10 @@ public class DipendenteDTO {
 	private String nome;
 	@NotBlank(message = "{cognome.notblank}")
 	private String cognome;
-	//@NotBlank(message = "{codiceFiscale.notblank}")
+	// @NotBlank(message = "{codiceFiscale.notblank}")
 	@Size(min = 16, max = 16, message = "Il valore inserito '${validatedValue}' deve essere lungo {min} caratteri")
 	private String codiceFiscale;
-	//@NotBlank(message = "{email.notblank}")
+	// @NotBlank(message = "{email.notblank}")
 	private String email;
 	@NotNull(message = "{dataNascita.notnull}")
 	private Date dataNascita;
@@ -57,6 +57,10 @@ public class DipendenteDTO {
 		this.dataNascita = dataNascita;
 		this.dataAssunzione = dataAssunzione;
 		this.sesso = sesso;
+	}
+
+	public DipendenteDTO(Long id) {
+		this.id = id;
 	}
 
 	public DipendenteDTO(String nome, String cognome, String codFis, String email, Date dataNascita,

@@ -13,18 +13,41 @@ public class MessaggioDTO {
 
 	private String oggetto;
 
-	private boolean letto;
+	private Boolean letto;
+
+	private RichiestaPermessoDTO rp;
 
 	public MessaggioDTO() {
 		super();
 	}
 
-	public MessaggioDTO(Long id, String testo, String oggetto, boolean letto) {
+	public MessaggioDTO(Long id, String testo, String oggetto, Boolean letto) {
 		super();
 		this.id = id;
 		this.testo = testo;
 		this.oggetto = oggetto;
 		this.letto = letto;
+	}
+
+	public MessaggioDTO(Long id, String testo, String oggetto, Boolean letto, RichiestaPermessoDTO rp) {
+		super();
+		this.id = id;
+		this.testo = testo;
+		this.oggetto = oggetto;
+		this.letto = letto;
+		this.rp = rp;
+	}
+
+	public RichiestaPermessoDTO getRp() {
+		return rp;
+	}
+
+	public void setRp(RichiestaPermessoDTO rp) {
+		this.rp = rp;
+	}
+
+	public Boolean getLetto() {
+		return letto;
 	}
 
 	public Long getId() {
@@ -51,21 +74,22 @@ public class MessaggioDTO {
 		this.oggetto = oggetto;
 	}
 
-	public boolean isLetto() {
+	public Boolean isLetto() {
 		return letto;
 	}
 
-	public void setLetto(boolean letto) {
+	public void setLetto(Boolean letto) {
 		this.letto = letto;
 	}
 
-	public Messaggio buildMessaggioModel() {
+	public Messaggio buildMessaggioModelForSearch() {
 		return new Messaggio(this.id, this.testo, this.oggetto, this.letto);
 	}
 
 	public static MessaggioDTO buildMessaggioDTOFromModel(Messaggio messaggioModel) {
 		return new MessaggioDTO(messaggioModel.getId(), messaggioModel.getTesto(), messaggioModel.getOggetto(),
-				messaggioModel.isLetto());
+				messaggioModel.isLetto(),
+				RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(messaggioModel.getRichiesta()));
 	}
 
 	public static List<MessaggioDTO> createMessaggioDTOListFromModelList(List<Messaggio> modelListInput) {

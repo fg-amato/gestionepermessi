@@ -18,7 +18,7 @@ public class RichiestaPermessoDTO {
 
 	@NotNull(message = "{dataInizio.notnull}", groups = (ValidationForInsertUpdateRichiestaPermesso.class))
 	private Date dataInizio;
-	
+
 	private Date dataFine;
 	@NotNull(message = "{tipoPermesso.notblank}", groups = (ValidationForInsertUpdateRichiestaPermesso.class))
 	private TipoPermesso tipoPermesso;
@@ -131,15 +131,22 @@ public class RichiestaPermessoDTO {
 		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
 				this.note, this.approvato, this.dipendente.buildDipendenteModelForSearch());
 	}
-	
+
 	public RichiestaPermesso buildRichiestaModelForInsert() {
 		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
 				this.note, this.dipendente.buildDipendenteModelForSearch());
 	}
-	
+
 	public RichiestaPermesso buildRichiestaModelForUpdate() {
 		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
 				this.note);
+	}
+
+	public static RichiestaPermessoDTO buildRichiestaDTOForMessageSearch(Long idDipendente) {
+		RichiestaPermessoDTO result = new RichiestaPermessoDTO();
+		result.setDipendente(new DipendenteDTO(idDipendente));
+
+		return result;
 	}
 
 	public static RichiestaPermessoDTO buildRichiestaPermessoDTOFromModel(RichiestaPermesso richiestaModel) {

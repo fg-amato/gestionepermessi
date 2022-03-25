@@ -1,5 +1,6 @@
 <!doctype html>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="it" class="h-100" >
 	 <head>
 	 
@@ -86,6 +87,30 @@
 			</sec:authorize>
 			
 			 <sec:authorize access="hasRole('BO_USER')">
+			 <c:if test="${messaggio_letto_attribute}">
+					
+					<div class="modal fade" id="confirmOperationModal" tabindex="-1"  aria-labelledby="confirmOperationModalLabel"
+					    aria-hidden="true">
+					    <div class="modal-dialog" >
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <h5 class="modal-title" id="confirmOperationModalLabel">Vai ai Messaggi</h5>
+								</div>
+					            <div class="modal-body">
+					               Ci sono nuovi messaggi da visualizzare
+					            </div>
+					            <form method="post" action="${pageContext.request.contextPath}/messaggio/list" >
+						       		<div class="modal-footer">
+						                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+					          			<a class="btn btn-primary" href="${pageContext.request.contextPath}/messaggio/listMessaggi">Visualizza</a>
+						        	</div>
+					            </form>
+					        </div>
+					    </div>
+					</div>
+					
+	
+		    	</c:if>
 			   <div class="p-5 mb-4 bg-light rounded-3">
 				      <div class="container-fluid py-5">
 				        <h1 class="display-5 fw-bold">Benvenuto alla Gestione Permessi</h1>
@@ -104,7 +129,7 @@
 			        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
 			        
 			         <div class="col text-center">
-			        	 <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/gestione_messaggi/search">Vai alla funzionalità</a>
+			        	 <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/messaggio/search">Vai alla funzionalità</a>
 			      	</div>
 			      </div>
 			      <div class="feature col">
@@ -131,6 +156,12 @@
 			    </sec:authorize>
 		</div>
 			  
+			  
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$('#confirmOperationModal').modal('show')
+				})
+			</script>
 			  
 			</main>
 			

@@ -66,10 +66,6 @@ public class Messaggio {
 		this.richiesta = richiesta;
 	}
 
-	public Boolean getLetto() {
-		return letto;
-	}
-
 	public Messaggio(Boolean letto, RichiestaPermesso rp) {
 		super();
 		this.letto = letto;
@@ -82,6 +78,15 @@ public class Messaggio {
 		this.testo = testo;
 		this.oggetto = oggetto;
 		this.letto = letto;
+	}
+
+	public Messaggio(Long id, String testo, String oggetto, Boolean letto, RichiestaPermesso rp) {
+		super();
+		this.id = id;
+		this.testo = testo;
+		this.oggetto = oggetto;
+		this.letto = letto;
+		this.richiesta = rp;
 	}
 
 	public Messaggio(RichiestaPermesso rp, Long id) {
@@ -97,6 +102,10 @@ public class Messaggio {
 //		this.oggetto = this.buildOggettoMessaggio(rp);
 		this.letto = letto;
 		this.richiesta = rp;
+	}
+
+	public Messaggio(boolean b) {
+		this.letto = b;
 	}
 
 	private static String buildOggettoMessaggio(RichiestaPermesso rp) {

@@ -19,4 +19,8 @@ public interface MessaggioService {
 
 	public Page<Messaggio> findByExampleWithPagination(Messaggio example, Integer pageNo, Integer pageSize,
 			String sortBy);
+
+	public Messaggio caricaSingoloElementoConRichiesta(Long idMessaggio);
+
+	public boolean listNonLetti();
 }

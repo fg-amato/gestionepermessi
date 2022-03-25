@@ -131,7 +131,6 @@ public class RichiestaPermessoController {
 	public String show(@PathVariable(required = true) Long idRichiesta, Model model) {
 		RichiestaPermesso richiestaModel = richiestaPermessoService
 				.caricaSingoloElementoConDipendenteEAttachment(idRichiesta);
-		System.out.println(richiestaModel.getDipendente().getNome());
 		model.addAttribute("show_richiesta_attr",
 				RichiestaPermessoDipAttachmentDTO.buildRichiestaPermessoDipAttachmentDTOFromModel(richiestaModel));
 		return "richiesta_permesso/show";
