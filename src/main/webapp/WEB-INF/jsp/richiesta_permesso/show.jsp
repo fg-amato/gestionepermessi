@@ -36,12 +36,11 @@
 							  <dt class="col-sm-3 text-right">Tipo permesso:</dt>
 							  <dd class="col-sm-9">${show_richiesta_attr.tipoPermesso}</dd>
 					    	</dl>
-					    	<c:if test=" ${show_richiesta_attr.tipoPermesso == MALATTIA} ">
-						    	<dl class="row">
-								  <dt class="col-sm-3 text-right">Codice Certificato:</dt>
-								  <dd class="col-sm-9">${show_richiesta_attr.codiceCertificato}</dd>
-						    	</dl>
-					    	</c:if>
+						    
+						    <dl class="row ${show_richiesta_attr.tipoPermesso == 'MALATTIA'? '':'d-none'} ">
+								<dt class="col-sm-3 text-right">Codice Certificato:</dt>
+								<dd class="col-sm-9">${show_richiesta_attr.codiceCertificato}</dd>
+						    </dl>
 					    	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Data Inizio:</dt>
