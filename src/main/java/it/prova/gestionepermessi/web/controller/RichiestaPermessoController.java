@@ -58,7 +58,7 @@ public class RichiestaPermessoController {
 		System.out.println(richiestaPermessoExample.isApprovato());
 		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
 				.createRichiestaDTOListFromModelList(richiestaPermessoService
-						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearchAndInsert(),
+						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(),
 								pageNo, pageSize, sortBy)
 						.getContent());
 //		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
@@ -85,12 +85,11 @@ public class RichiestaPermessoController {
 			@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "9") Integer pageSize,
 			@RequestParam(defaultValue = "id") String sortBy, ModelMap model) {
 		Utente utenteInSession = utenteService.trovaByUsernameWithDipendente(usernameUtente);
-		System.out.println(richiestaPermessoExample.isApprovato());
 		richiestaPermessoExample
 				.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(utenteInSession.getDipendente()));
 		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
 				.createRichiestaDTOListFromModelList(richiestaPermessoService
-						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearchAndInsert(),
+						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(),
 								pageNo, pageSize, sortBy)
 						.getContent());
 		model.addAttribute("richieste_list_attribute", richieste);
@@ -105,8 +104,8 @@ public class RichiestaPermessoController {
 
 	@PostMapping("/save")
 	public String save(@Validated({
-			ValidationForInsertUpdateRichiestaPermesso.class }) @ModelAttribute("insert_richiesta_attr") RichiestaPermessoDTO rpDTO,
-			@RequestParam(name = "usernameUtente", required = true) String usernameUtente, BindingResult result,
+			ValidationForInsertUpdateRichiestaPermesso.class }) @ModelAttribute("insert_richiesta_attr") RichiestaPermessoDTO rpDTO,BindingResult result,
+			@RequestParam(name = "usernameUtente", required = true) String usernameUtente, 
 			Model model, RedirectAttributes redirectAttrs) {
 		Utente utenteInSession = utenteService.trovaByUsernameWithDipendente(usernameUtente);
 		rpDTO.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(utenteInSession.getDipendente()));
@@ -117,7 +116,7 @@ public class RichiestaPermessoController {
 		if (result.hasErrors()) {
 			return "richiesta_permesso/insert";
 		}
-		richiestaPermessoService.addRichiestaEInserisciMessaggio(rpDTO.buildRichiestaModelForSearchAndInsert());
+		richiestaPermessoService.addRichiestaEInserisciMessaggio(rpDTO.buildRichiestaModelForInsert());
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/home";
 	}

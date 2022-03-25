@@ -127,9 +127,14 @@ public class RichiestaPermessoDTO {
 				this.note);
 	}
 
-	public RichiestaPermesso buildRichiestaModelForSearchAndInsert() {
+	public RichiestaPermesso buildRichiestaModelForSearch() {
 		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
 				this.note, this.approvato, this.dipendente.buildDipendenteModelForSearch());
+	}
+	
+	public RichiestaPermesso buildRichiestaModelForInsert() {
+		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
+				this.note, this.dipendente.buildDipendenteModelForSearch());
 	}
 
 	public static RichiestaPermessoDTO buildRichiestaPermessoDTOFromModel(RichiestaPermesso richiestaModel) {

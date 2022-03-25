@@ -24,7 +24,7 @@
 	  <div class="container">
 	
 			<%-- se l'attributo in request ha errori --%>
-		<spring:hasBindErrors  name="insert_dipendente_attr">
+		<spring:hasBindErrors  name="insert_richiesta_attr">
 						<%-- alert errori --%>
 			<div class="alert alert-danger " role="alert">
 				Attenzione!! Sono presenti errori di validazione
