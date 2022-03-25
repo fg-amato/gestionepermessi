@@ -123,7 +123,7 @@
 								});
 							</script>
 								
-							<div class="row-md-6">
+							<div class="col-md-6">
 								<p> Stato richiesta </p>
  								<div class="form-check">
   									<input class="form-check-input" type="radio" value = "true" name="approvato" id="flexRadioDefault1">
@@ -139,7 +139,7 @@
 								</div>
 								
 								<div class="form-check">
-  									<input class="form-check-input" type="radio" value ="null" name="approvato" id="flexRadioDefault2">
+  									<input class="form-check-input" type="radio" value ="" name="approvato" id="flexRadioDefault2">
   										<label class="form-check-label" for="flexRadioDefault3">
     										Entrambe
   										</label>

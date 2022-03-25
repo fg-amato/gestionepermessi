@@ -53,11 +53,9 @@ public class RichiestaPermessoController {
 
 	@PostMapping("/list")
 	public String listRichieste(RichiestaPermessoDTO richiestaPermessoExample,
-			@RequestParam(name = "approvato", required = false) String approvato,
 			@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "9") Integer pageSize,
 			@RequestParam(defaultValue = "id") String sortBy, ModelMap model) {
-
-		System.out.println(approvato.toString());
+		System.out.println(richiestaPermessoExample.isApprovato());
 		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
 				.createRichiestaDTOListFromModelList(richiestaPermessoService
 						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearchAndInsert(),
@@ -87,6 +85,7 @@ public class RichiestaPermessoController {
 			@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "9") Integer pageSize,
 			@RequestParam(defaultValue = "id") String sortBy, ModelMap model) {
 		Utente utenteInSession = utenteService.trovaByUsernameWithDipendente(usernameUtente);
+		System.out.println(richiestaPermessoExample.isApprovato());
 		richiestaPermessoExample
 				.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(utenteInSession.getDipendente()));
 		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
@@ -94,7 +93,6 @@ public class RichiestaPermessoController {
 						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearchAndInsert(),
 								pageNo, pageSize, sortBy)
 						.getContent());
-		System.out.println(richieste.size());
 		model.addAttribute("richieste_list_attribute", richieste);
 		return "richiesta_permesso/list";
 	}

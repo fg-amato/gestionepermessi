@@ -73,16 +73,26 @@
 							</script>
 								
 							<div class="col-md-6">
-               					 <label for="stato" class="form-label">Stato</label>
-                   					 <select class="form-select " id="approvato" name="approvato" >
-					                      <option value="" selected> - Selezionare - </option>
-					                        <option value="true" >Approvato</option>
-					                      <option value="false">Non approvato</option>
-					                        <option value="" >Entrambe</option>
-					                  </select>
-					              </div>
+								<p> Stato richiesta </p>
+ 								<div class="form-check">
+  									<input class="form-check-input" type="radio" value = "true" name="approvato" id="flexRadioDefault1">
+  										<label class="form-check-label" for="flexRadioDefault1">
+    										Approvate
+  										</label>
+								</div>
+								<div class="form-check">
+  									<input class="form-check-input" type="radio" value = "false" name="approvato" id="flexRadioDefault2">
+  										<label class="form-check-label" for="flexRadioDefault2">
+    										Non approvate
+  										</label>
+								</div>
 								
-								
+								<div class="form-check">
+  									<input class="form-check-input" type="radio" value ="" name="approvato" id="flexRadioDefault2">
+  										<label class="form-check-label" for="flexRadioDefault3">
+    										Entrambe
+  										</label>
+								</div>
 							</div>
 							
 							<div class="col-12">	

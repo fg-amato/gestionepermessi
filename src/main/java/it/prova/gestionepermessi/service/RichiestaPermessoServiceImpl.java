@@ -73,7 +73,6 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 				predicates.add(cb.equal(cb.upper(root.get("dipendente")), example.getDipendente().getId()));
 
 			if (example.isApprovato() != null) {
-				System.out.println("APPROVE" + example.isApprovato());
 				predicates.add(cb.equal(root.get("approvato"), example.isApprovato()));
 			}
 

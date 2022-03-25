@@ -106,7 +106,7 @@ public class RichiestaPermessoDTO {
 		this.tipoPermesso = tipoPermesso;
 	}
 
-	public boolean isApprovato() {
+	public Boolean isApprovato() {
 		return approvato;
 	}
 
@@ -129,7 +129,7 @@ public class RichiestaPermessoDTO {
 
 	public RichiestaPermesso buildRichiestaModelForSearchAndInsert() {
 		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
-				this.note, this.dipendente.buildDipendenteModelForSearch());
+				this.note, this.approvato, this.dipendente.buildDipendenteModelForSearch());
 	}
 
 	public static RichiestaPermessoDTO buildRichiestaPermessoDTOFromModel(RichiestaPermesso richiestaModel) {

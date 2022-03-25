@@ -102,6 +102,19 @@ public class RichiestaPermesso {
 		this.dipendente = dipendente;
 	}
 
+	public RichiestaPermesso(Long id, String codiceCertificato, Date dataInizio, Date dataFine,
+			TipoPermesso tipoPermesso, String note, Boolean approvato, Dipendente dipendente) {
+		super();
+		this.id = id;
+		this.codiceCertificato = codiceCertificato;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.tipoPermesso = tipoPermesso;
+		this.note = note;
+		this.approvato = approvato;
+		this.dipendente = dipendente;
+	}
+
 	public Long getId() {
 		return id;
 	}
