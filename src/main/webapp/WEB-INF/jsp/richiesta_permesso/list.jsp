@@ -66,11 +66,16 @@
 										<td>${"${richiestaItem.approvato==null}"? 'Approvata' : 'Non approvata' }</td>
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/richieste_permesso/show/${richiestaItem.id }">Visualizza</a>
-											<%-- <a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/richieste_permesso/edit/${richiestaItem.id }">Edit</a> --%>
-											
-											<c:if test = "${ richiestaItem.isNotStarted() }">
-												<a id="changeApprovazioneLink_#_${richiestaItem.id }" class="btn btn-outline-${richiestaItem.isApprovato()?'danger':'success'} btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >${richiestaItem.isApprovato()?'Disapprova':'Approva'}</a>
-											</c:if>
+											<sec:authorize access="hasRole('DIPENDENTE_USER')">
+												<c:if test = "${ richiestaItem.isNotStarted() }">
+													<a class="btn  btn-sm btn-outline-warning ml-2 mr-2" href="${pageContext.request.contextPath}/richieste_permesso/edit/${richiestaItem.id }">Edit</a>
+												</c:if>
+											</sec:authorize>
+											<sec:authorize access="hasRole('BO_USER')">
+												<c:if test = "${ richiestaItem.isNotStarted() }">
+													<a id="changeApprovazioneLink_#_${richiestaItem.id }" class="btn btn-outline-${richiestaItem.isApprovato()?'danger':'success'} btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >${richiestaItem.isApprovato()?'Disapprova':'Approva'}</a>
+												</c:if>
+											</sec:authorize>
 										</td>			
 									</tr>
 								</c:forEach>

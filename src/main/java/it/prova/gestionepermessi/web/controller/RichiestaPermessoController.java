@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.gestionepermessi.dto.DipendenteDTO;
 import it.prova.gestionepermessi.dto.RichiestaPermessoDTO;
+import it.prova.gestionepermessi.dto.RichiestaPermessoDipAttachmentDTO;
+import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.model.TipoPermesso;
 import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.service.RichiestaPermessoService;
@@ -42,7 +45,7 @@ public class RichiestaPermessoController {
 		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
 				.createRichiesteDTOListFromModelList(richiestaPermessoService.listAllElements());
 		mv.addObject("richieste_list_attribute", richieste);
-		mv.setViewName("richieste_permesso/list");
+		mv.setViewName("richiesta_permesso/list");
 		return mv;
 	}
 
@@ -55,11 +58,10 @@ public class RichiestaPermessoController {
 	public String listRichieste(RichiestaPermessoDTO richiestaPermessoExample,
 			@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "9") Integer pageSize,
 			@RequestParam(defaultValue = "id") String sortBy, ModelMap model) {
-		System.out.println(richiestaPermessoExample.isApprovato());
 		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
 				.createRichiestaDTOListFromModelList(richiestaPermessoService
-						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(),
-								pageNo, pageSize, sortBy)
+						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(), pageNo,
+								pageSize, sortBy)
 						.getContent());
 //		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
 //				.createRichiestaDTOListFromModelList(richiestaPermessoService.listAllElements());
@@ -71,7 +73,7 @@ public class RichiestaPermessoController {
 	public String cambiaApprovazione(
 			@RequestParam(name = "idRichiestaForChangingApprovazione", required = true) Long idRichiesta) {
 		richiestaPermessoService.changeRequestApprovement(idRichiesta);
-		return "redirect:/richiesta_permesso";
+		return "redirect:/richieste_permesso";
 	}
 
 	@GetMapping("/search_personal")
@@ -89,8 +91,8 @@ public class RichiestaPermessoController {
 				.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(utenteInSession.getDipendente()));
 		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
 				.createRichiestaDTOListFromModelList(richiestaPermessoService
-						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(),
-								pageNo, pageSize, sortBy)
+						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(), pageNo,
+								pageSize, sortBy)
 						.getContent());
 		model.addAttribute("richieste_list_attribute", richieste);
 		return "richiesta_permesso/list";
@@ -104,8 +106,8 @@ public class RichiestaPermessoController {
 
 	@PostMapping("/save")
 	public String save(@Validated({
-			ValidationForInsertUpdateRichiestaPermesso.class }) @ModelAttribute("insert_richiesta_attr") RichiestaPermessoDTO rpDTO,BindingResult result,
-			@RequestParam(name = "usernameUtente", required = true) String usernameUtente, 
+			ValidationForInsertUpdateRichiestaPermesso.class }) @ModelAttribute("insert_richiesta_attr") RichiestaPermessoDTO rpDTO,
+			BindingResult result, @RequestParam(name = "usernameUtente", required = true) String usernameUtente,
 			Model model, RedirectAttributes redirectAttrs) {
 		Utente utenteInSession = utenteService.trovaByUsernameWithDipendente(usernameUtente);
 		rpDTO.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(utenteInSession.getDipendente()));
@@ -119,6 +121,16 @@ public class RichiestaPermessoController {
 		richiestaPermessoService.addRichiestaEInserisciMessaggio(rpDTO.buildRichiestaModelForInsert());
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/home";
+	}
+
+	@GetMapping("/show/{idRichiesta}")
+	public String show(@PathVariable(required = true) Long idRichiesta, Model model) {
+		RichiestaPermesso richiestaModel = richiestaPermessoService
+				.caricaSingoloElementoConDipendenteEAttachment(idRichiesta);
+		System.out.println(richiestaModel.getDipendente().getNome());
+		model.addAttribute("show_richiesta_attr",
+				RichiestaPermessoDipAttachmentDTO.buildRichiestaPermessoDipAttachmentDTOFromModel(richiestaModel));
+		return "richiesta_permesso/show";
 	}
 
 }

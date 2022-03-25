@@ -11,6 +11,8 @@ public interface RichiestaPermessoService {
 
 	public RichiestaPermesso caricaSingoloElemento(Long id);
 
+	public RichiestaPermesso caricaSingoloElementoConDipendenteEAttachment(Long id);
+
 	public void aggiorna(RichiestaPermesso richiestaInstance);
 
 	public void inserisciNuovo(RichiestaPermesso richiestaInstance);

@@ -119,4 +119,9 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 
 	}
 
+	@Override
+	public RichiestaPermesso caricaSingoloElementoConDipendenteEAttachment(Long id) {
+		return repository.findRequestWithDipendenteAndAllegato(id);
+	}
+
 }
