@@ -1,6 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="it" class="h-100">
 <head>
@@ -60,15 +61,15 @@
 			                	<c:forEach items="${richieste_list_attribute }" var="richiestaItem">
 									<tr>
 										<td>${richiestaItem.tipoPermesso }</td>
-										<td>${richiestaItem.dataInizio }</td>
-										<td>${richiestaItem.dataFine }</td>
+										<td><fmt:formatDate type = "date" value = "${richiestaItem.dataInizio }" /></td>
+										<td><fmt:formatDate type = "date" value = "${richiestaItem.dataFine }" /></td>
 										<td>${"${richiestaItem.approvato==null}"? 'Approvata' : 'Non approvata' }</td>
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/richieste_permesso/show/${richiestaItem.id }">Visualizza</a>
 											<%-- <a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/richieste_permesso/edit/${richiestaItem.id }">Edit</a> --%>
 											
 											<c:if test = "${ richiestaItem.isNotStarted() }">
-												<a id="changeApprovazioneLink_#_${richiestaItem.id }" class="btn btn-outline-${richiestaItem.isApprovata()?'danger':'success'} btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >${richiestaItem.isAttivo()?'Disapprova':'Approva'}</a>
+												<a id="changeApprovazioneLink_#_${richiestaItem.id }" class="btn btn-outline-${richiestaItem.isApprovato()?'danger':'success'} btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >${richiestaItem.isApprovato()?'Disapprova':'Approva'}</a>
 											</c:if>
 										</td>			
 									</tr>

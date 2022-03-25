@@ -47,20 +47,15 @@
 			<main class="flex-shrink-0">
 			  <div class="container">
 			  
-			  <div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none': ''}" role="alert">
-			  ${errorMessage}
-			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			    <span aria-hidden="true">&times;</span>
-			  </button>
-			</div>
-			    
-			    <%--  <div class="p-5 mb-4 bg-light rounded-3">
-				      <div class="container-fluid py-5">
-				        <h1 class="display-5 fw-bold">Benvenuto alla Raccolta Film</h1>
-				        <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. </p>
-				        <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/regista/search">Vai a Ricerca</a>
-				      </div>
-			    </div> --%>
+			   <div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }" role="alert">
+					  ${errorMessage}
+					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+				</div> 
+				<div class="alert alert-success alert-dismissible fade show ${successMessage==null?'d-none':'' }" role="alert">
+					  ${successMessage}
+					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+				</div> 
+			 
 			    <sec:authorize access="hasRole('ADMIN')">
 		      <!--  features di bootstrap 'Columns with icons'  -->
 			  <div class="container-fluid px-4  py-5" id="featured-3">
@@ -136,44 +131,6 @@
 			    </sec:authorize>
 		</div>
 			  
-			 <%--  <!--  features di bootstrap 'Columns with icons'  -->
-			  <div class="container px-4 py-5" id="featured-3">
-			    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-			      <div class="feature col">
-			        <div class="feature-icon bg-primary bg-gradient">
-			          <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"/></svg>
-			        </div>
-			        <h2>Ricerca Registi</h2>
-			        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-			        <a href="${pageContext.request.contextPath}/regista/search" class="icon-link">
-			          Vai alla funzionalità
-			          <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"/></svg>
-			        </a>
-			      </div>
-			      <div class="feature col">
-			        <div class="feature-icon bg-primary bg-gradient">
-			          <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"/></svg>
-			        </div>
-			        <h2>Inserisci Nuovo Regista</h2>
-			        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-			        <a href="${pageContext.request.contextPath}/regista/insert" class="icon-link">
-			          Vai alla funzionalità
-			          <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"/></svg>
-			        </a>
-			      </div>
-			      <div class="feature col">
-			        <div class="feature-icon bg-primary bg-gradient">
-			          <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
-			        </div>
-			        <h2>Ricerca Film</h2>
-			        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-			        <a href="${pageContext.request.contextPath}/film/search" class="icon-link">
-			          Vai alla funzionalità
-			          <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"/></svg>
-			        </a>
-			      </div>
-			    </div>
-			  </div> --%>
 			  
 			</main>
 			
