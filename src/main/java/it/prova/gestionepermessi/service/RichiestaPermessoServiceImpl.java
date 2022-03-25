@@ -106,11 +106,17 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	@Override
 	@Transactional
 	public void changeRequestApprovement(Long idRichiesta) {
-		RichiestaPermesso richiestaInstance = caricaSingoloElemento(idRichiesta);
+		RichiestaPermesso richiestaInstance = repository.findById(idRichiesta).orElse(null);
 		if (richiestaInstance == null)
 			throw new RuntimeException("Elemento non trovato.");
-
-		richiestaInstance.setApprovato(!richiestaInstance.isApprovato());
+		if (richiestaInstance.isApprovato()) {
+			System.out.println("DISAPPROVO");
+			richiestaInstance.setApprovato(false);
+		} else {
+			System.out.println("APPROVO");
+			richiestaInstance.setApprovato(true);
+		}
+		repository.save(richiestaInstance);
 	}
 
 	@Override
@@ -118,7 +124,8 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	public void addRichiestaEInserisciMessaggio(RichiestaPermesso richiestaInstance) {
 		Messaggio messaggioInstance = RichiestaPermesso.createMessageFromRichiesta(richiestaInstance);
 		richiestaInstance.setApprovato(false);
-		richiestaInstance.setDataFine(richiestaInstance.getDataFine()==null? richiestaInstance.getDataInizio(): richiestaInstance.getDataFine());
+		richiestaInstance.setDataFine(richiestaInstance.getDataFine() == null ? richiestaInstance.getDataInizio()
+				: richiestaInstance.getDataFine());
 		repository.save(richiestaInstance);
 		repositoryMessage.save(messaggioInstance);
 
@@ -154,9 +161,10 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 			throw new RuntimeException("Elemento non trovato");
 
 		rpReloaded.setDataInizio(richiestaInstance.getDataInizio());
-		//se data fine è nulla vuol dire che ho selezionato giorno singolo
-		rpReloaded.setDataFine(richiestaInstance.getDataFine()==null? richiestaInstance.getDataInizio(): richiestaInstance.getDataFine());
-		
+		// se data fine è nulla vuol dire che ho selezionato giorno singolo
+		rpReloaded.setDataFine(richiestaInstance.getDataFine() == null ? richiestaInstance.getDataInizio()
+				: richiestaInstance.getDataFine());
+
 		rpReloaded.setTipoPermesso(richiestaInstance.getTipoPermesso());
 		rpReloaded.setNote(richiestaInstance.getNote());
 		rpReloaded.setApprovato(false);

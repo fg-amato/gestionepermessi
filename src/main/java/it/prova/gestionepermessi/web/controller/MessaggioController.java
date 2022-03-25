@@ -30,7 +30,7 @@ public class MessaggioController {
 		List<MessaggioDTO> messaggi = MessaggioDTO
 				.createMessaggioDTOListFromModelList(messaggioService.listAllElements());
 		mv.addObject("messaggi_list_attribute", messaggi);
-		mv.setViewName("messaggi_permesso/list");
+		mv.setViewName("messaggio/list");
 		return mv;
 	}
 
@@ -54,8 +54,9 @@ public class MessaggioController {
 	@GetMapping("/show/{idMessaggio}")
 	public String show(@PathVariable(required = true) Long idMessaggio, Model model) {
 		Messaggio messaggioModel = messaggioService.caricaSingoloElementoConRichiesta(idMessaggio);
+		messaggioService.leggi(idMessaggio);
 		model.addAttribute("show_messaggio_attr", MessaggioDTO.buildMessaggioDTOFromModel(messaggioModel));
-		return "richiesta_permesso/show";
+		return "messaggio/show";
 	}
 
 	@GetMapping("/listMessaggi")

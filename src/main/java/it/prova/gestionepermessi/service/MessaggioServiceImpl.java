@@ -80,13 +80,24 @@ public class MessaggioServiceImpl implements MessaggioService {
 
 	@Override
 	public Messaggio caricaSingoloElementoConRichiesta(Long idMessaggio) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.caricaSingoloElementoEager(idMessaggio);
 	}
 
 	@Override
 	public boolean listNonLetti() {
 		return (repository.findAllByLetto(false).size()) > 0;
+	}
+
+	@Override
+	public void leggi(Long idMessaggio) {
+		Messaggio messaggioReloaded = repository.findById(idMessaggio).orElse(null);
+		if (messaggioReloaded == null) {
+			throw new RuntimeException("Errore");
+		}
+
+		messaggioReloaded.setLetto(true);
+
+		repository.save(messaggioReloaded);
 	}
 
 }

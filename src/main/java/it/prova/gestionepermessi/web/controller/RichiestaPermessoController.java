@@ -71,8 +71,8 @@ public class RichiestaPermessoController {
 
 	@PostMapping("/cambiaApprovazione")
 	public String cambiaApprovazione(
-			@RequestParam(name = "idRichiestaForChangingApprovazione", required = true) Long idRichiesta) {
-		richiestaPermessoService.changeRequestApprovement(idRichiesta);
+			@RequestParam(name = "idRichiestaForChangingApprovazione", required = true) Long idRichiestaForChangingApprovazione) {
+		richiestaPermessoService.changeRequestApprovement(idRichiestaForChangingApprovazione);
 		return "redirect:/richieste_permesso";
 	}
 
@@ -161,7 +161,7 @@ public class RichiestaPermessoController {
 		if (checked == null && rpDTO.getDataFine() == null) {
 			result.rejectValue("dataFine", "dataFine.notnull");
 		}
-		
+
 		if (!result.hasFieldErrors("tipoPermesso") && rpDTO.getTipoPermesso() != TipoPermesso.FERIE
 				&& rpDTO.getCodiceCertificato().isBlank()) {
 			result.rejectValue("tipoPermesso", "codObbligatorio");

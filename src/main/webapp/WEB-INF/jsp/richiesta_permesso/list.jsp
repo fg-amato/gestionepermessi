@@ -63,18 +63,13 @@
 										<td>${richiestaItem.tipoPermesso }</td>
 										<td><fmt:formatDate type = "date" value = "${richiestaItem.dataInizio }" /></td>
 										<td><fmt:formatDate type = "date" value = "${richiestaItem.dataFine }" /></td>
-										<td>${"${richiestaItem.approvato==null}"? 'Approvata' : 'Non approvata' }</td>
+										<td>${richiestaItem.isApprovato()? 'Approvato' : 'Non approvato'}</td>
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/richieste_permesso/show/${richiestaItem.id }">Visualizza</a>
 											<sec:authorize access="hasRole('DIPENDENTE_USER')">
 												<c:if test = "${ richiestaItem.isNotStarted() }">
 													<a class="btn  btn-sm btn-outline-warning ml-2 mr-2" href="${pageContext.request.contextPath}/richieste_permesso/edit/${richiestaItem.id }">Edit</a>
 													<a id="deleteRichiestaLink_#_${richiestaItem.id }" class="btn btn-outline-danger btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal1">Delete</a>
-												</c:if>
-											</sec:authorize>
-											<sec:authorize access="hasRole('BO_USER')">
-												<c:if test = "${ richiestaItem.isNotStarted() }">
-													<a id="changeApprovazioneLink_#_${richiestaItem.id }" class="btn btn-outline-${richiestaItem.isApprovato()?'danger':'success'} btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >${richiestaItem.isApprovato()?'Disapprova':'Approva'}</a>
 												</c:if>
 											</sec:authorize>
 										</td>			
@@ -95,38 +90,6 @@
 	
 	
 	
-	<!-- Modal -->
-	<div class="modal fade" id="confirmOperationModal" tabindex="-1"  aria-labelledby="confirmOperationModalLabel"
-	    aria-hidden="true">
-	    <div class="modal-dialog" >
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="confirmOperationModalLabel">Conferma Operazione</h5>
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	            </div>
-	            <div class="modal-body">
-	                Continuare con l'operazione?
-	            </div>
-	            <form method="post" action="${pageContext.request.contextPath}/richieste_permesso/cambiaApprovazione" >
-		            <div class="modal-footer">
-		            	<input type="hidden" name="idRichiestaForChangingApprovazione" id="idRichiestaForChangingApprovazione">
-		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-		                <input type="submit" value="Continua"  class="btn btn-primary">
-		            </div>
-	            </form>
-	        </div>
-	    </div>
-	</div>
-	<!-- end Modal -->
-	<script type="text/javascript">
-		<!-- aggancio evento click al conferma del modal  -->
-		$(".link-for-modal").click(function(){
-			<!-- mi prendo il numero che poi sarà l'id. Il 18 è perché 'changeStatoLink_#_' è appunto lungo 18  -->
-			var callerId = $(this).attr('id').substring(25);
-			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
-			$('#idRichiestaForChangingApprovazione').val(callerId);
-		});
-	</script>
 	
 	
 	<!-- Modal -->

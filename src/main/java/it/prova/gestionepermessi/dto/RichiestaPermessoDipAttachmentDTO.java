@@ -73,6 +73,7 @@ public class RichiestaPermessoDipAttachmentDTO {
 		this.dataFine = dataFine;
 		this.tipoPermesso = tipoPermesso;
 		this.note = note;
+		this.approvato = approvato;
 		this.dipendente = dipendente;
 	}
 

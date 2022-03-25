@@ -66,6 +66,18 @@ public class RichiestaPermessoDTO {
 		this.note = note;
 	}
 
+	public RichiestaPermessoDTO(Long id, String codiceCertificato, Date dataInizio, Date dataFine,
+			TipoPermesso tipoPermesso, String note, Boolean approvato) {
+		super();
+		this.id = id;
+		this.codiceCertificato = codiceCertificato;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.tipoPermesso = tipoPermesso;
+		this.note = note;
+		this.approvato = approvato;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -152,7 +164,7 @@ public class RichiestaPermessoDTO {
 	public static RichiestaPermessoDTO buildRichiestaPermessoDTOFromModel(RichiestaPermesso richiestaModel) {
 		return new RichiestaPermessoDTO(richiestaModel.getId(), richiestaModel.getCodiceCertificato(),
 				richiestaModel.getDataInizio(), richiestaModel.getDataFine(), richiestaModel.getTipoPermesso(),
-				richiestaModel.getNote());
+				richiestaModel.getNote(), richiestaModel.isApprovato());
 	}
 
 	public static List<RichiestaPermessoDTO> createRichiestaDTOListFromModelList(

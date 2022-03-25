@@ -23,4 +23,6 @@ public interface MessaggioService {
 	public Messaggio caricaSingoloElementoConRichiesta(Long idMessaggio);
 
 	public boolean listNonLetti();
+
+	public void leggi(Long idMessaggio);
 }
