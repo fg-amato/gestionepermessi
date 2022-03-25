@@ -1,6 +1,7 @@
 package it.prova.gestionepermessi.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.Predicate;
@@ -28,6 +29,9 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 
 	@Autowired
 	private MessaggioRepository repositoryMessage;
+
+//	@Autowired
+//	private AttachmentRepository repositoryAttachment;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -120,8 +124,24 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RichiestaPermesso caricaSingoloElementoConDipendenteEAttachment(Long id) {
 		return repository.findRequestWithDipendenteAndAllegato(id);
+	}
+
+	@Override
+	@Transactional
+	public void rimuoviRichiestaEMessaggioAssociatoEAttachment(Long idRichiesta) {
+		// me la carico per dei controlli
+		RichiestaPermesso toRemove = repository.findById(idRichiesta).orElse(null);
+		if (toRemove == null || toRemove.getDataInizio().before(new Date())) {
+			throw new RuntimeException("Errore");
+		}
+
+		Messaggio toDelete = repositoryMessage.findRequestWithMessage(idRichiesta);
+		repositoryMessage.deleteById(toDelete.getId());
+		repository.deleteById(idRichiesta);
+
 	}
 
 }

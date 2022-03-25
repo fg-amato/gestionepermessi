@@ -69,6 +69,7 @@
 											<sec:authorize access="hasRole('DIPENDENTE_USER')">
 												<c:if test = "${ richiestaItem.isNotStarted() }">
 													<a class="btn  btn-sm btn-outline-warning ml-2 mr-2" href="${pageContext.request.contextPath}/richieste_permesso/edit/${richiestaItem.id }">Edit</a>
+													<a id="deleteRichiestaLink_#_${richiestaItem.id }" class="btn btn-outline-danger btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal1">Delete</a>
 												</c:if>
 											</sec:authorize>
 											<sec:authorize access="hasRole('BO_USER')">
@@ -140,11 +141,11 @@
 	            <div class="modal-body">
 	                Continuare con l'operazione? 
 	            </div>
-	            <form method="post" action="${pageContext.request.contextPath}/richieste_permesso/cambiaPassword" >
+	            <form method="post" action="${pageContext.request.contextPath}/richieste_permesso/delete" >
 		            <div class="modal-footer">
-		            	<input type="hidden" name="idUtenteForChangingPassword" id="idUtenteForChangingPassword">
+		            	<input type="hidden" name="idRichiestaToDelete" id="idRichiestaToDelete">
 		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-		                <input type="submit" value="Continua"  class="btn btn-primary">
+		                <input type="submit" value="Continua"  class="btn btn-danger">
 		            </div>
 	            </form>
 	        </div>
@@ -155,9 +156,9 @@
 		<!-- aggancio evento click al conferma del modal  -->
 		$(".link-for-modal").click(function(){
 			<!-- mi prendo il numero che poi sarà l'id. Il 18 è perché 'changeStatoLink_#_' è appunto lungo 18  -->
-			var callerId = $(this).attr('id').substring(21);
+			var callerId = $(this).attr('id').substring(22);
 			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
-			$('#idUtenteForChangingPassword').val(callerId);
+			$('#idRichiestaToDelete').val(callerId);
 		});
 	</script>
 	

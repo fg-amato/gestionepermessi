@@ -120,7 +120,7 @@ public class RichiestaPermessoController {
 		}
 		richiestaPermessoService.addRichiestaEInserisciMessaggio(rpDTO.buildRichiestaModelForInsert());
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-		return "redirect:/home";
+		return "redirect:/richieste_permesso";
 	}
 
 	@GetMapping("/show/{idRichiesta}")
@@ -131,6 +131,15 @@ public class RichiestaPermessoController {
 		model.addAttribute("show_richiesta_attr",
 				RichiestaPermessoDipAttachmentDTO.buildRichiestaPermessoDipAttachmentDTOFromModel(richiestaModel));
 		return "richiesta_permesso/show";
+	}
+
+	@PostMapping("/delete")
+	public String delete(@RequestParam(name = "idRichiestaToDelete", required = true) Long idRichiesta,
+			RedirectAttributes redirectAttrs) {
+
+		richiestaPermessoService.rimuoviRichiestaEMessaggioAssociatoEAttachment(idRichiesta);
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/richieste_permesso";
 	}
 
 }

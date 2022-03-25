@@ -25,4 +25,6 @@ public interface RichiestaPermessoService {
 	public void changeRequestApprovement(Long idRichiesta);
 
 	public void addRichiestaEInserisciMessaggio(RichiestaPermesso richiestaInstance);
+
+	public void rimuoviRichiestaEMessaggioAssociatoEAttachment(Long idRichiesta);
 }
