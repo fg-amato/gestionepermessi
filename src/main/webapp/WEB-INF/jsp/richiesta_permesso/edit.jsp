@@ -55,7 +55,7 @@
 								</div>
 								
 								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${edit_richiesta_attr.dataFine}' />
-								<div class="col-md-6">
+								<div class="col-md-6" id ="dataFineDiv">
 									<label for="dataFine" class="form-label">Data Fine<span class="text-danger">*</span></label>
                         			<spring:bind path="dataFine">
 	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id=dataFine type="date" placeholder="dd/MM/yy"
@@ -79,7 +79,7 @@
 								    <form:errors  path="tipoPermesso" cssClass="error_field" />
 								</div>
 							
-							<script>
+							<!-- <script>
 								$('.form-select').click(function(){
 								
 									if($('#tipoPermesso :selected').text()=== 'MALATTIA'){
@@ -90,12 +90,12 @@
 										$("#prova").addClass('d-none');
 									}
 								});
-							</script>
+							</script> -->
 							
 							
 								
 							
-							<div class="col-md-6  d-none" id ="prova">
+							<div class="col-md-6  ${edit_richiesta_attr.tipoPermesso == 'MALATTIA'? '':'d-none'}" id ="prova">
 									<label for="codiceCertificato" class="form-label">Codice Certificato<span class="text-danger">*</span></label>
 									<spring:bind path="codiceCertificato">
 									<input type="text" class="form-control ${status.error ? 'is-invalid' : ''}" name="codiceCertificato" id="codiceCertificato" placeholder="Inserire il codice certificato" value="${edit_richiesta_attr.codiceCertificato }">
@@ -107,6 +107,40 @@
 									<label for="note" class="form-label">Note</label>
 									<input type="text" class="form-control" name="note" id="note" placeholder="Inserire note" value="${edit_richiesta_attr.note }">
 							</div>
+							
+							<div class="col-md-6 datiMalattia ${edit_richiesta_attr.tipoPermesso == 'MALATTIA'? '':'d-none'}" id="datiMalattia">
+								<label for="allegato" class="form-label">Allegato</label>
+								<input class="form-control" type="file" id="allegato" name="file" >
+							</div>
+							
+							<div class="col-md-12 form-check">
+									<div class="form-check">
+										  <input class="form-check-input" name="check" type="checkbox" id="check">
+										  <label class="form-check-label" for="check" >
+										    Giorno Singolo
+										  </label>
+									</div>
+							</div>
+							
+							<script>
+								$(document).ready(function(){
+									$('.form-select').click(function(){
+										if($('#tipoPermesso :selected').text()=== 'MALATTIA'){
+											$("#prova").removeClass('d-none');
+											$("#datiMalattia").removeClass('d-none');
+										}else{
+											$("#prova").addClass('d-none');
+											$("#datiMalattia").addClass('d-none');
+										}
+									});
+									
+									$('#check').click(function(){
+										$("#dataFineDiv").toggle();
+									});
+								});
+								
+								
+							</script>	
 							
 							<div class="col-12">	
 								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>

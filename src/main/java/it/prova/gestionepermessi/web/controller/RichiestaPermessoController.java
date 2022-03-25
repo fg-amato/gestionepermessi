@@ -108,7 +108,11 @@ public class RichiestaPermessoController {
 	public String save(@Validated({
 			ValidationForInsertUpdateRichiestaPermesso.class }) @ModelAttribute("insert_richiesta_attr") RichiestaPermessoDTO rpDTO,
 			BindingResult result, @RequestParam(name = "usernameUtente", required = true) String usernameUtente,
-			Model model, RedirectAttributes redirectAttrs) {
+			@RequestParam(name = "check", required = false) String checked, Model model,
+			RedirectAttributes redirectAttrs) {
+		if (checked == null && rpDTO.getDataFine() == null) {
+			result.rejectValue("dataFine", "dataFine.notnull");
+		}
 		Utente utenteInSession = utenteService.trovaByUsernameWithDipendente(usernameUtente);
 		rpDTO.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(utenteInSession.getDipendente()));
 		if (!result.hasFieldErrors("tipoPermesso") && rpDTO.getTipoPermesso() != TipoPermesso.FERIE
@@ -152,8 +156,13 @@ public class RichiestaPermessoController {
 	@PostMapping("/update")
 	public String update(@Validated({
 			ValidationForInsertUpdateRichiestaPermesso.class }) @ModelAttribute("edit_richiesta_attr") RichiestaPermessoDTO rpDTO,
-			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+			BindingResult result, @RequestParam(name = "check", required = false) String checked, Model model,
+			RedirectAttributes redirectAttrs, HttpServletRequest request) {
 
+		if (checked == null && rpDTO.getDataFine() == null) {
+			result.rejectValue("dataFine", "dataFine.notnull");
+		}
+		
 		if (!result.hasFieldErrors("tipoPermesso") && rpDTO.getTipoPermesso() != TipoPermesso.FERIE
 				&& rpDTO.getCodiceCertificato().isBlank()) {
 			result.rejectValue("tipoPermesso", "codObbligatorio");
@@ -162,6 +171,7 @@ public class RichiestaPermessoController {
 		if (result.hasErrors()) {
 			return "richiesta_permesso/edit";
 		}
+		rpDTO.setDataFine(null);
 		richiestaPermessoService.aggiornaRichiestaEMessaggio(rpDTO.buildRichiestaModelForUpdate());
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/richieste_permesso";

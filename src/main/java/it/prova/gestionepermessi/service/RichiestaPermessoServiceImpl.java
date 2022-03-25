@@ -118,6 +118,7 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	public void addRichiestaEInserisciMessaggio(RichiestaPermesso richiestaInstance) {
 		Messaggio messaggioInstance = RichiestaPermesso.createMessageFromRichiesta(richiestaInstance);
 		richiestaInstance.setApprovato(false);
+		richiestaInstance.setDataFine(richiestaInstance.getDataFine()==null? richiestaInstance.getDataInizio(): richiestaInstance.getDataFine());
 		repository.save(richiestaInstance);
 		repositoryMessage.save(messaggioInstance);
 
@@ -153,7 +154,9 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 			throw new RuntimeException("Elemento non trovato");
 
 		rpReloaded.setDataInizio(richiestaInstance.getDataInizio());
-		rpReloaded.setDataFine(richiestaInstance.getDataFine());
+		//se data fine è nulla vuol dire che ho selezionato giorno singolo
+		rpReloaded.setDataFine(richiestaInstance.getDataFine()==null? richiestaInstance.getDataInizio(): richiestaInstance.getDataFine());
+		
 		rpReloaded.setTipoPermesso(richiestaInstance.getTipoPermesso());
 		rpReloaded.setNote(richiestaInstance.getNote());
 		rpReloaded.setApprovato(false);

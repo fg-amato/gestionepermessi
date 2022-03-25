@@ -18,7 +18,7 @@ public class RichiestaPermessoDTO {
 
 	@NotNull(message = "{dataInizio.notnull}", groups = (ValidationForInsertUpdateRichiestaPermesso.class))
 	private Date dataInizio;
-	@NotNull(message = "{dataFine.notnull}", groups = (ValidationForInsertUpdateRichiestaPermesso.class))
+	
 	private Date dataFine;
 	@NotNull(message = "{tipoPermesso.notblank}", groups = (ValidationForInsertUpdateRichiestaPermesso.class))
 	private TipoPermesso tipoPermesso;
