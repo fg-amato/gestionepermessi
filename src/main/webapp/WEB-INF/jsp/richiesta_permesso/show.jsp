@@ -36,7 +36,7 @@
 							  <dt class="col-sm-3 text-right">Tipo permesso:</dt>
 							  <dd class="col-sm-9">${show_richiesta_attr.tipoPermesso}</dd>
 					    	</dl>
-					    	<c:if test=" ${show_richiesta_attr.tipoPermesso== TipoPermesso.MALATTIA} ">
+					    	<c:if test=" ${show_richiesta_attr.tipoPermesso == MALATTIA} ">
 						    	<dl class="row">
 								  <dt class="col-sm-3 text-right">Codice Certificato:</dt>
 								  <dd class="col-sm-9">${show_richiesta_attr.codiceCertificato}</dd>
@@ -60,7 +60,7 @@
 					    	
 					    	<dl class="row">
 								  <dt class="col-sm-3 text-right">Note:</dt>
-								  <dd class="col-sm-9">${show_richiesta_attr.note==null? 'Nessuna nota' : '${show_richiesta_attr.note}'}</dd>
+								  <dd class="col-sm-9">${show_richiesta_attr.note==null? 'Nessuna nota' : show_richiesta_attr.note}</dd>
 						    </dl>
 						    
 						    <!-- info Dipendente -->

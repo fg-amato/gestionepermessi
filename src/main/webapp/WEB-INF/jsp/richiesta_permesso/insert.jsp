@@ -42,7 +42,7 @@
 					<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
 						<form:form modelAttribute="insert_richiesta_attr" method="post" action="save" novalidate="novalidate" class="row g-3">
 						  <input type="hidden" name="usernameUtente" value= <sec:authentication property = "principal.username"/> > 
-							
+						  
 								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_richiesta_attr.dataInizio}' />
 								<div class="col-md-6">
 									<label for="dataInizio" class="form-label">Data Inizio<span class="text-danger">*</span></label>
@@ -102,6 +102,11 @@
 									</spring:bind>
 									<form:errors  path="codiceCertificato" cssClass="error_field" />
 							</div>	
+							
+							<div class="col-md-10">
+									<label for="note" class="form-label">Note</label>
+									<input type="text" class="form-control" name="note" id="note" placeholder="Inserire note" value="${edit_richiesta_attr.note }">
+							</div>
 							
 							
 							<div class="col-12">	

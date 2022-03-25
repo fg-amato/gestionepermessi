@@ -136,6 +136,11 @@ public class RichiestaPermessoDTO {
 		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
 				this.note, this.dipendente.buildDipendenteModelForSearch());
 	}
+	
+	public RichiestaPermesso buildRichiestaModelForUpdate() {
+		return new RichiestaPermesso(this.id, this.codiceCertificato, this.dataInizio, this.dataFine, this.tipoPermesso,
+				this.note);
+	}
 
 	public static RichiestaPermessoDTO buildRichiestaPermessoDTOFromModel(RichiestaPermesso richiestaModel) {
 		return new RichiestaPermessoDTO(richiestaModel.getId(), richiestaModel.getCodiceCertificato(),

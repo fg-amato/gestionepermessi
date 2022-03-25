@@ -27,4 +27,6 @@ public interface RichiestaPermessoService {
 	public void addRichiestaEInserisciMessaggio(RichiestaPermesso richiestaInstance);
 
 	public void rimuoviRichiestaEMessaggioAssociatoEAttachment(Long idRichiesta);
+
+	public void aggiornaRichiestaEMessaggio(RichiestaPermesso richiestaInstance);
 }

@@ -12,7 +12,7 @@
 		    }
 	</style>
 	<jsp:include page="../header.jsp" />
-	<title>Inserisci Richiesta</title>
+	<title>Modifica Richiesta</title>
 	
 </head>
 <body class="d-flex flex-column h-100">
@@ -35,14 +35,14 @@
 		
 			<div class='card'>
 			    <div class='card-header'>
-			        <h5>Inserisci nuova richiesta</h5> 
+			        <h5>Modifica richiesta</h5> 
 			    </div>
 			    
 			    <div class='card-body'>
 					<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
-						<form:form modelAttribute="edit_richiesta_attr" method="post" action="save" novalidate="novalidate" class="row g-3">
-						  <input type="hidden" name="usernameUtente" value= <sec:authentication property = "principal.username"/> > 
-							
+						<form:form modelAttribute="edit_richiesta_attr" method="post" action="${pageContext.request.contextPath}/richieste_permesso/update" novalidate="novalidate" class="row g-3">
+						  <input type="hidden" name="id" value="${edit_richiesta_attr.id }">
+						  
 								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${edit_richiesta_attr.dataInizio}' />
 								<div class="col-md-6">
 									<label for="dataInizio" class="form-label">Data Inizio<span class="text-danger">*</span></label>
@@ -103,6 +103,10 @@
 									<form:errors  path="codiceCertificato" cssClass="error_field" />
 							</div>	
 							
+							<div class="col-md-10">
+									<label for="note" class="form-label">Note</label>
+									<input type="text" class="form-control" name="note" id="note" placeholder="Inserire note" value="${edit_richiesta_attr.note }">
+							</div>
 							
 							<div class="col-12">	
 								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>

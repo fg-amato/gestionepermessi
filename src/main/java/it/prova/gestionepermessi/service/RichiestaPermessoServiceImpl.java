@@ -144,4 +144,27 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 
 	}
 
+	@Override
+	@Transactional
+	public void aggiornaRichiestaEMessaggio(RichiestaPermesso richiestaInstance) {
+
+		RichiestaPermesso rpReloaded = repository.findByIdWithDipendente(richiestaInstance.getId()).orElse(null);
+		if (rpReloaded == null)
+			throw new RuntimeException("Elemento non trovato");
+
+		rpReloaded.setDataInizio(richiestaInstance.getDataInizio());
+		rpReloaded.setDataFine(richiestaInstance.getDataFine());
+		rpReloaded.setTipoPermesso(richiestaInstance.getTipoPermesso());
+		rpReloaded.setNote(richiestaInstance.getNote());
+		rpReloaded.setApprovato(false);
+		rpReloaded.setAttachment(richiestaInstance.getAttachment());
+		rpReloaded.setCodiceCertificato(richiestaInstance.getCodiceCertificato());
+
+		Messaggio m = repositoryMessage.findRequestWithMessage(richiestaInstance.getId());
+		m.setRichiesta(rpReloaded);
+		Messaggio.fromUpdateRichiestaToUpdateMessage(m);
+
+		repositoryMessage.save(m);
+	}
+
 }

@@ -2,6 +2,8 @@ package it.prova.gestionepermessi.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,8 +65,6 @@ public class RichiestaPermessoController {
 						.findByExampleWithPagination(richiestaPermessoExample.buildRichiestaModelForSearch(), pageNo,
 								pageSize, sortBy)
 						.getContent());
-//		List<RichiestaPermessoDTO> richieste = RichiestaPermessoDTO
-//				.createRichiestaDTOListFromModelList(richiestaPermessoService.listAllElements());
 		model.addAttribute("richieste_list_attribute", richieste);
 		return "richiesta_permesso/list";
 	}
@@ -136,8 +136,33 @@ public class RichiestaPermessoController {
 	@PostMapping("/delete")
 	public String delete(@RequestParam(name = "idRichiestaToDelete", required = true) Long idRichiesta,
 			RedirectAttributes redirectAttrs) {
-
 		richiestaPermessoService.rimuoviRichiestaEMessaggioAssociatoEAttachment(idRichiesta);
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/richieste_permesso";
+	}
+
+	@GetMapping("/edit/{idRichiesta}")
+	public String edit(@PathVariable(required = true) Long idRichiesta, Model model) {
+		RichiestaPermesso richiestaModel = richiestaPermessoService.caricaSingoloElemento(idRichiesta);
+		model.addAttribute("edit_richiesta_attr",
+				RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiestaModel));
+		return "richiesta_permesso/edit";
+	}
+
+	@PostMapping("/update")
+	public String update(@Validated({
+			ValidationForInsertUpdateRichiestaPermesso.class }) @ModelAttribute("edit_richiesta_attr") RichiestaPermessoDTO rpDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (!result.hasFieldErrors("tipoPermesso") && rpDTO.getTipoPermesso() != TipoPermesso.FERIE
+				&& rpDTO.getCodiceCertificato().isBlank()) {
+			result.rejectValue("tipoPermesso", "codObbligatorio");
+		}
+
+		if (result.hasErrors()) {
+			return "richiesta_permesso/edit";
+		}
+		richiestaPermessoService.aggiornaRichiestaEMessaggio(rpDTO.buildRichiestaModelForUpdate());
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/richieste_permesso";
 	}
