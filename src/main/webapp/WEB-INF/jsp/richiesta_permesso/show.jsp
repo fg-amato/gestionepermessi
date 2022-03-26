@@ -66,7 +66,15 @@
 
 					<dl class="row">
 						<dt class="col-sm-3 text-right">Note:</dt>
-						<dd class="col-sm-9">${show_richiesta_attr.note==null? 'Nessuna nota' : show_richiesta_attr.note}</dd>
+						<dd class="col-sm-9">${show_richiesta_attr.note.isEmpty()? 'Nessuna nota' : show_richiesta_attr.note}</dd>
+					</dl>
+
+					<dl
+						class="row ${show_richiesta_attr.attachment==null? 'd-none' : ''}">
+						<dt class="col-sm-3 text-right">Allegato:</dt>
+						<dd class="col-sm-9">
+							<a href="${pageContext.request.contextPath}/attachment/showAttachment/${show_richiesta_attr.attachment.id }"> ${show_richiesta_attr.attachment.nomeFile}</a>
+						</dd>
 					</dl>
 
 					<!-- info Dipendente -->

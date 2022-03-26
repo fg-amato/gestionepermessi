@@ -25,6 +25,17 @@ public class Attachment {
 	@Lob
 	private byte[] payload;
 
+//	@OneToOne
+//	private RichiestaPermesso richiestaPermesso;
+
+//	public RichiestaPermesso getRichiestaPermesso() {
+//		return richiestaPermesso;
+//	}
+//
+//	public void setRichiestaPermesso(RichiestaPermesso richiestaPermesso) {
+//		this.richiestaPermesso = richiestaPermesso;
+//	}
+
 	public Attachment() {
 		super();
 	}

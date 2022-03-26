@@ -21,7 +21,7 @@ import it.prova.gestionepermessi.model.Attachment;
 import it.prova.gestionepermessi.service.AttachmentService;
 
 @Controller
-@RequestMapping(value = { "", "/attachment" })
+@RequestMapping(value = { "/attachment" })
 public class AttachmentController {
 
 	@Autowired

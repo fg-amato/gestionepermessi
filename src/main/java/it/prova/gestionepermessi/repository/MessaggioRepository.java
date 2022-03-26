@@ -11,11 +11,11 @@ import it.prova.gestionepermessi.model.Messaggio;
 public interface MessaggioRepository
 		extends PagingAndSortingRepository<Messaggio, Long>, JpaSpecificationExecutor<Messaggio> {
 
-	@Query("from Messaggio m join fetch m.richiesta rp where rp.id = ?1")
+	@Query("from Messaggio m join fetch m.richiesta rp left join fetch rp.attachment where rp.id = ?1")
 	Messaggio findRequestWithMessage(Long idRichiesta);
 
 	List<Messaggio> findAllByLetto(boolean b);
-	
+
 	@Query("from Messaggio m join fetch m.richiesta where m.id = ?1")
 	Messaggio caricaSingoloElementoEager(Long idMessaggio);
 

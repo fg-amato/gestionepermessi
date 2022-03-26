@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionepermessi.model.Messaggio;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
+import it.prova.gestionepermessi.repository.AttachmentRepository;
 import it.prova.gestionepermessi.repository.MessaggioRepository;
 import it.prova.gestionepermessi.repository.RichiestaPermessoRepository;
 
@@ -30,8 +31,8 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	@Autowired
 	private MessaggioRepository repositoryMessage;
 
-//	@Autowired
-//	private AttachmentRepository repositoryAttachment;
+	@Autowired
+	private AttachmentRepository repositoryAttachment;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -126,6 +127,7 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 		richiestaInstance.setApprovato(false);
 		richiestaInstance.setDataFine(richiestaInstance.getDataFine() == null ? richiestaInstance.getDataInizio()
 				: richiestaInstance.getDataFine());
+		repositoryAttachment.save(richiestaInstance.getAttachment());
 		repository.save(richiestaInstance);
 		repositoryMessage.save(messaggioInstance);
 
@@ -145,11 +147,14 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 		if (toRemove == null || toRemove.getDataInizio().before(new Date())) {
 			throw new RuntimeException("Errore");
 		}
-
+		// carico messaggio con attachment anche
 		Messaggio toDelete = repositoryMessage.findRequestWithMessage(idRichiesta);
 		repositoryMessage.deleteById(toDelete.getId());
-		repository.deleteById(idRichiesta);
+		if (toDelete.getRichiesta().getAttachment().getId() != null) {
+			repositoryAttachment.deleteById(toDelete.getRichiesta().getAttachment().getId());
+		}
 
+		repository.deleteById(idRichiesta);
 	}
 
 	@Override

@@ -3,8 +3,8 @@ package it.prova.gestionepermessi.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionepermessi.model.Attachment;
 import it.prova.gestionepermessi.repository.AttachmentRepository;
@@ -16,37 +16,33 @@ public class AttachmentServiceImpl implements AttachmentService {
 	private AttachmentRepository repository;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Attachment> listAllElements() {
 		return (List<Attachment>) repository.findAll();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Attachment caricaSingoloElemento(Long id) {
 		return repository.findById(id).orElse(null);
 	}
 
-
-
 	@Override
-	public void aggiorna(Attachment filmInstance) {
-		repository.save(filmInstance);
+	@Transactional
+	public void aggiorna(Attachment entityInstance) {
+		repository.save(entityInstance);
 	}
 
 	@Override
-	public void inserisciNuovo(Attachment filmInstance) {
-		repository.save(filmInstance);
+	@Transactional
+	public void inserisciNuovo(Attachment entityInstance) {
+		repository.save(entityInstance);
 	}
 
 	@Override
-	public void rimuovi(Attachment filmInstance) {
-		repository.delete(filmInstance);
-	}
-
-	@Override
-	public Page<Attachment> findByExampleWithPagination(Attachment example, Integer pageNo, Integer pageSize,
-			String sortBy) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public void rimuoviById(Long idToRemove) {
+		repository.deleteById(idToRemove);
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
+import it.prova.gestionepermessi.model.Attachment;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.model.TipoPermesso;
 import it.prova.gestionepermessi.validation.ValidationForInsertUpdateRichiestaPermesso;
@@ -29,13 +30,13 @@ public class RichiestaPermessoDipAttachmentDTO {
 	@NotNull(message = "{dipendente.notnull}")
 	private DipendenteDTO dipendente;
 
-	private AttachmentDTO attachment;
+	private Attachment attachment;
 
-	public AttachmentDTO getAttachment() {
+	public Attachment getAttachment() {
 		return attachment;
 	}
 
-	public void setAttachment(AttachmentDTO attachment) {
+	public void setAttachment(Attachment attachment) {
 		this.attachment = attachment;
 	}
 
@@ -159,7 +160,7 @@ public class RichiestaPermessoDipAttachmentDTO {
 				this.note, this.dipendente.buildDipendenteModelForSearch());
 	}
 
-	public static RichiestaPermessoDipAttachmentDTO buildRichiestaPermessoDipAttachmentDTOFromModel(
+	public static RichiestaPermessoDipAttachmentDTO buildRichiestaPermessoDipAttachmentFromModel(
 			RichiestaPermesso richiestaModel) {
 		RichiestaPermessoDipAttachmentDTO result = new RichiestaPermessoDipAttachmentDTO(richiestaModel.getId(),
 				richiestaModel.getCodiceCertificato(), richiestaModel.getDataInizio(), richiestaModel.getDataFine(),
@@ -167,23 +168,17 @@ public class RichiestaPermessoDipAttachmentDTO {
 				DipendenteDTO.buildDipendenteDTOFromModel(richiestaModel.getDipendente()));
 
 		if (richiestaModel.getAttachment() != null) {
-			result.setAttachment(AttachmentDTO.buildAttachmentDTOFromModel(richiestaModel.getAttachment()));
+			result.setAttachment(richiestaModel.getAttachment());
 		}
 
 		return result;
 	}
 
-	public static List<RichiestaPermessoDipAttachmentDTO> createRichiestaDTOListFromModelList(
-			List<RichiestaPermesso> modelListInput) {
-		return modelListInput.stream().map(richiestaEntity -> {
-			return RichiestaPermessoDipAttachmentDTO.buildRichiestaPermessoDipAttachmentDTOFromModel(richiestaEntity);
-		}).collect(Collectors.toList());
-	}
 
 	public static List<RichiestaPermessoDipAttachmentDTO> createRichiesteDTOListFromModelList(
 			List<RichiestaPermesso> modelListInput) {
 		return modelListInput.stream().map(richiesteEntity -> {
-			return RichiestaPermessoDipAttachmentDTO.buildRichiestaPermessoDipAttachmentDTOFromModel(richiesteEntity);
+			return RichiestaPermessoDipAttachmentDTO.buildRichiestaPermessoDipAttachmentFromModel(richiesteEntity);
 		}).collect(Collectors.toList());
 	}
 

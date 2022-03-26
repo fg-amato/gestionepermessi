@@ -40,7 +40,7 @@
 			    
 			    <div class='card-body'>
 					<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
-						<form:form modelAttribute="insert_richiesta_attr" method="post" action="save" novalidate="novalidate" class="row g-3">
+						<form:form modelAttribute="insert_richiesta_attr" method="post" action="save" novalidate="novalidate" class="row g-3" enctype="multipart/form-data">
 						  <input type="hidden" name="usernameUtente" value= <sec:authentication property = "principal.username"/> > 
 						  
 								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_richiesta_attr.dataInizio}' />
@@ -109,8 +109,8 @@
 							</div>
 							
 							<div class="col-md-6 datiMalattia d-none" id="datiMalattia">
-								<label for="allegato" class="form-label">Allegato</label>
-								<input class="form-control" type="file" id="allegato" name="file" >
+									  <label for="allegato" class="form-label">Allegato </label>
+									  <input class="form-control" type="file" id="allegato" name="file" required>
 							</div>
 							
 							<div class="col-md-12 form-check">

@@ -79,7 +79,7 @@ public class DipendenteController {
 	@PostMapping("/save")
 	public String save(@Valid @ModelAttribute("insert_dipendente_attr") DipendenteDTO dipendenteDTO,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
-
+		
 		if (result.hasErrors()) {
 			model.addAttribute("ruoli_totali_attr",
 					RuoloDTO.createRuoloDTOListFromModelList(ruoloService.findAllExceptAdmin()));
