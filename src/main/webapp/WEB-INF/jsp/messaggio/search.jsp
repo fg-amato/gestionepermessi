@@ -4,7 +4,7 @@
 <html lang="it" class="h-100" >
 <head>
 	<jsp:include page="../header.jsp" />
-	<title>Ricerca</title>
+	<title>Ricerca Messaggi</title>
 	
     <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/jqueryUI/jquery-ui.min.css" />
 </head>
@@ -26,7 +26,7 @@
 		
 			<div class='card'>
 			    <div class='card-header'>
-			        <h5>Ricerca elementi</h5> 
+			        <h5>Ricerca messaggi</h5> 
 			    </div>
 			    <div class='card-body'>
 		
